@@ -5,7 +5,8 @@
 $enable-ltr: true;
 $enable-rtl: true;
 
-// Import styles with default layout.
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+
 @import "~@coreui/coreui/scss/coreui";
 
 // Import Chart.js custom tooltips styles
@@ -23,4 +24,15 @@ $enable-rtl: true;
 @import "examples";
 
 // If you want to add something do it here
+@import "inbox";
+
+// If you want to add something do it here
+@import "media";
+
+@import "animation";
+
+@import "rtl";
+
 @import "custom";
+
+@import "~bootstrap/dist/css/bootstrap.css";

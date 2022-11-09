@@ -12,18 +12,59 @@ export const navItems: INavData[] = [
   },
   {
     name: 'Paramètrage',
-    iconComponent: { name: 'cil-puzzle' },
+    iconComponent: { name: 'cilSettings' },
     children: [
       {
-        name: 'Gestion des utilisateurs',
-        url: '/app-gestion-utilisateur',
+        name: 'Utilisateurs',
+        url: '/utilisateurs',
+        iconComponent: { name: 'cil-user' }
       },
       {
-        name: 'Gestion des roles',
-        url: '/app-gestion-role'
+        name: 'Roles',
+        url: '/role',
+      },
+      {
+        name: 'Contacts',
+        url: '/contact',
+        iconComponent: { name: 'cil-phone' }
       },
     ]
-  }
+  },
+  {
+    name: 'Emissions',
+    url: '/emissions',
+    iconComponent: { name: 'cilTask' }
+  },
+  {
+    name: 'Enseignements',
+    url: '/enseignements',
+    iconComponent: { name: 'cilBookmark' }
+  },
+  {
+    name: 'A propos de nous',
+    url: '/apropos',
+    iconComponent: { name: 'cil-user' }
+  },
+  {
+    name: 'Archivres',
+    url: '/archives',
+    iconComponent: { name: 'cilFile' }
+  },
+  {
+    name: 'Galérie',
+    url: '/galerie',
+    iconComponent: { name: 'cilMediaPlay' }
+  },
+  {
+    name: 'Faire un don',
+    url: '/don',
+    iconComponent: { name: 'cilDollar' }
+  },
+  {
+    name: 'Contacts',
+    url: '/contacts',
+    iconComponent: { name: 'cilPhone' }
+  },
  /* {
     name: 'Theme',
     url: '/theme/colors',
@@ -35,12 +76,12 @@ export const navItems: INavData[] = [
     linkProps: { fragment: 'someAnchor' },
     iconComponent: { name: 'cil-pencil' }
   },*/
-  /**/
-  /*{
+/*
+  {
     name: 'Components',
     title: true
-  },
-  {
+  },*/
+ /* {
     name: 'Base',
     url: '/base',
     iconComponent: { name: 'cil-puzzle' },
@@ -106,8 +147,8 @@ export const navItems: INavData[] = [
         url: '/base/tooltips'
       }
     ]
-  },
-  {
+  },*/
+/*  {
     name: 'Buttons',
     url: '/buttons',
     iconComponent: { name: 'cil-cursor' },
@@ -125,8 +166,8 @@ export const navItems: INavData[] = [
         url: '/buttons/dropdowns'
       },
     ]
-  },
-  {
+  },*/
+  /*{
     name: 'Forms',
     url: '/forms',
     iconComponent: { name: 'cil-notes' },
@@ -169,8 +210,8 @@ export const navItems: INavData[] = [
     name: 'Charts',
     url: '/charts',
     iconComponent: { name: 'cil-chart-pie' }
-  },
-  {
+  },*/
+ /* {
     name: 'Icons',
     iconComponent: { name: 'cil-star' },
     url: '/icons',
@@ -192,8 +233,8 @@ export const navItems: INavData[] = [
         url: '/icons/brands'
       }
     ]
-  },
-  {
+  },*/
+ /* {
     name: 'Notifications',
     url: '/notifications',
     iconComponent: { name: 'cil-bell' },
@@ -224,8 +265,8 @@ export const navItems: INavData[] = [
       color: 'info',
       text: 'NEW'
     }
-  },
-  {
+  },*/
+/*  {
     title: true,
     name: 'Extras'
   },

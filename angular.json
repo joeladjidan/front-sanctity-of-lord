@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "front-admin": {
+    "front-sanctity-of-lord": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -23,7 +23,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "front-admin",
+            "outputPath": "front-sanctity-of-lord",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -80,10 +80,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "front-admin:build:production"
+              "browserTarget": "front-sanctity-of-lord:build:production"
             },
             "development": {
-              "browserTarget": "front-admin:build:development"
+              "browserTarget": "front-sanctity-of-lord:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -91,7 +91,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "front-admin:build"
+            "browserTarget": "front-sanctity-of-lord:build"
           }
         },
         "test": {
@@ -104,7 +104,12 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/ngx-video-list-player/assets",
+                "output": "/assets/"
+              }
             ],
             "styles": [
               "src/scss/styles.scss"

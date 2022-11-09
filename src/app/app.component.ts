@@ -11,7 +11,7 @@ import { Title } from '@angular/platform-browser';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  title = 'CoreUI Free Angular Admin Template';
+  title = 'Sanctity of The Lord';
 
   constructor(
     private router: Router,

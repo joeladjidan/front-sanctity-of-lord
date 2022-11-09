@@ -11,7 +11,7 @@
         size="lg"
       ></svg>
     </button>
-    <c-header-nav class="d-none d-lg-flex me-auto">
+   <!-- <c-header-nav class="d-none d-lg-flex me-auto">
       <c-nav-item>
         <a cNavLink routerLink="/dashboard" routerLinkActive="active">
           Dashboard
@@ -25,9 +25,9 @@
           Settings
         </a>
       </c-nav-item>
-    </c-header-nav>
+    </c-header-nav>-->
 
-    <c-header-nav class="d-none d-lg-flex">
+    <!--<c-header-nav class="d-none d-lg-flex">
       <c-nav-item>
         <a routerLink="./" cNavLink>
           <svg cIcon name="cilBell" size="lg"></svg>
@@ -43,7 +43,7 @@
           <svg cIcon name="cilEnvelopeOpen" size="lg"></svg>
         </a>
       </c-nav-item>
-    </c-header-nav>
+    </c-header-nav>-->
     <c-header-nav class="ms-3">
       <ng-container *ngTemplateOutlet="userDropdown"></ng-container>
     </c-header-nav>
@@ -69,7 +69,7 @@
         cTextColor="primary"
         shape="rounded-1"
         size="md"
-        src="./assets/img/avatars/8.jpg"
+        src="./assets/img/avatars/utilisateur.png"
         status="success"
       >
       </c-avatar>
@@ -150,6 +150,12 @@
       </li>
       <li>
         <hr cDropdownDivider/>
+      </li>
+      <li>
+        <a routerLink="login" cDropdownItem>
+          <svg cIcon class="me-2" name="cilUser"></svg>
+          Login
+        </a>
       </li>
       <li>
         <a routerLink="login" cDropdownItem>

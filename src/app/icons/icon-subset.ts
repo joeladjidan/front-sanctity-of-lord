@@ -66,7 +66,7 @@ import {
   cilPaperPlane,
   cilPen,
   cilPencil,
-  cilPeople,
+  cilPeople, cilPhone,
   cilPrint,
   cilPuzzle,
   cilReportSlash,
@@ -180,6 +180,7 @@ export const iconSubset = {
   cilUserFemale,
   cilUserFollow,
   cilUserUnfollow,
+  cilPhone,
 };
 
 export enum IconSubset {
@@ -272,4 +273,5 @@ export enum IconSubset {
   cilUserFemale = 'cilUserFemale',
   cilUserFollow = 'cilUserFollow',
   cilUserUnfollow = 'cilUserUnfollow',
+  cilPhone = 'cilPhone',
 }

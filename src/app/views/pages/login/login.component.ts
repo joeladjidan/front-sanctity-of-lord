@@ -1,9 +1,9 @@
 import {Component, OnInit, QueryList, ViewChildren} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationRequest} from "@docs-components/models";
 import {UtilisateursService} from "@docs-components/services";
 import {ToasterComponent} from "@coreui/angular";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',

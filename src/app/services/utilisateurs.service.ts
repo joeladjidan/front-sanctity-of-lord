@@ -3,33 +3,36 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpRequest, HttpResponse} from '@angular/common/http';
 import {ApiConfiguration as __Configuration} from '../../app/api-configuration';
 import {Observable as __Observable} from 'rxjs';
-import {filter as __filter, map as __map} from 'rxjs/operators';
+import {filter as __filter, map, map as __map} from 'rxjs/operators';
 import { BaseService as __BaseService } from '../../components/base-service';
 import {UtilisateurDto} from '../../app/models/utilisateur-dto';
 import { StrictHttpResponse as __StrictHttpResponse } from '../../components/strict-http-response';
 import {ChangerMotDePasseUtilisateurDto} from '../../app/models/changer-mot-de-passe-utilisateur-dto';
-import {AuthenticationRequest, AuthenticationResponse} from "@docs-components/models";
 import {BehaviorSubject, Observable, of} from 'rxjs';
-import {AuthenticationService} from "@docs-components/services";
+import {AuthenticationService} from "../../components/services";
+import {AuthenticationRequest} from "../models/authentication-request";
+import {AuthenticationResponse} from "../models/authentication-response";
+import {Subscription} from "../../../node_modules/rxjs/dist/types/internal/Subscription";
+import { Http} from '@angular/http';
 
 @Injectable({
   providedIn: 'root',
 })
 class UtilisateursService extends __BaseService {
-  static readonly findAllPath = '/gestiondestock/v1/utilisateurs/all';
+
+  private baseUrl = this.rootUrl + `/utilisateurs`;
   static readonly savePath = '/gestiondestock/v1/utilisateurs/create';
   static readonly deletePath = '/gestiondestock/v1/utilisateurs/delete/{idUtilisateur}';
   static readonly findByEmailPath = '/gestiondestock/v1/utilisateurs/find/{email}';
   static readonly changerMotDePassePath = '/gestiondestock/v1/utilisateurs/update/password';
   static readonly findByIdPath = '/gestiondestock/v1/utilisateurs/{idUtilisateur}';
-
-
   public loggedIn = new BehaviorSubject<boolean>(false);
   ACCESS_TOKEN = 'accessToken';
 
   constructor(
     config: __Configuration,
     http: HttpClient,
+    public https: Http,
     private authenticationService: AuthenticationService
   ) {
     super(config, http);
@@ -46,7 +49,7 @@ class UtilisateursService extends __BaseService {
     let __body: any = null;
     let req = new HttpRequest<any>(
       'GET',
-      this.rootUrl + `/gestiondestock/v1/utilisateurs/all`,
+    `${this.baseUrl}/all`,
       __body,
       {
         headers: __headers,
@@ -290,9 +293,10 @@ class UtilisateursService extends __BaseService {
   }
 
 
+
+
 }
 
-module UtilisateursService {
-}
+module UtilisateursService {}
 
 export { UtilisateursService }

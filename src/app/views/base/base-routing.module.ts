@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
 import { AccordionsComponent } from './accordion/accordions.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { CardsComponent } from './cards/cards.component';

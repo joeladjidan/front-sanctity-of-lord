@@ -10,7 +10,6 @@ import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angula
 import { IconModule } from '@coreui/icons-angular';
 import {ReactiveFormsModule} from "@angular/forms";
 import {Page401Component} from "./page401/page401.component";
-import { PageUtilisateurComponent } from './page-utilisateur/page-utilisateur.component';
 
 
 @NgModule({

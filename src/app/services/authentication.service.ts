@@ -13,7 +13,7 @@ import { AuthenticationRequest } from '../models/authentication-request';
   providedIn: 'root',
 })
 class AuthenticationService extends __BaseService {
-  public readonly authenticatePath = '/gestiondestock/v1/auth/authenticate';
+  private baseUrl = this.rootUrl + `/auth/authenticate`;
 
   constructor(
     config: __Configuration,
@@ -33,7 +33,7 @@ class AuthenticationService extends __BaseService {
     __body = body;
     let req = new HttpRequest<any>(
       'POST',
-      this.rootUrl + this.authenticatePath,
+      `${this.baseUrl}`,
       __body,
       {
         headers: __headers,

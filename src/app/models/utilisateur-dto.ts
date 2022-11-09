@@ -7,6 +7,7 @@ export interface UtilisateurDto {
   nom?: string;
   prenom?: string;
   email?: string;
+  numTel?: string;
   dateDeNaissance?: number;
   moteDePasse?: string;
   adresse?: AdresseDto;
