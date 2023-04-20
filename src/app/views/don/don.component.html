@@ -1,0 +1,18 @@
+<c-card class="mb-2">
+  <c-card-header>PAR PAYPAL</c-card-header>
+    <c-card-body>
+      <img cCardImg="top" loading="lazy" src="{{this.donneePaypal?.url}}"  class="img center"/>
+      <br>
+      <a cButton cCol="4" href="https://www.paypal.com/donate/?hosted_button_id=QKUNR9ZD6HVEG" class="lien-button">
+        VIA LIENS
+      </a>
+    </c-card-body>
+</c-card>
+
+<c-card class="mb-4">
+  <c-card-header>PAR VIREMENT BANCAIRE</c-card-header>
+  <c-card-body>
+    <img cCardImg="top" loading="lazy" src="{{this.donneeRib?.url}}" height="280px" />
+  </c-card-body>
+</c-card>
+

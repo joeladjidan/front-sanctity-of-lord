@@ -6,12 +6,11 @@ import { iconSubset } from './icons/icon-subset';
 import { Title } from '@angular/platform-browser';
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'body',
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit, AfterViewInit {
-  title = 'Sanctity of The Lord';
+  title = 'Anagkazo';
 
   constructor(
     private router: Router,

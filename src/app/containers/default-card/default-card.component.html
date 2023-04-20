@@ -1,0 +1,71 @@
+<head>
+  <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=6409dc230ca0f8001a5dc63f&product=inline-share-buttons&source=platform" async="async"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+</head>
+<div class="container">
+  <div class="default-card-style rounded shadow mb-4 bg-white">
+    <div class="color-panel">
+      <br>
+      <img class="img-icon"
+           [src]="youtubeObj.url"
+           decoding="async"
+           data-nimg="intrinsic"
+           (click)="getPlaying(item.donnee.url,item.donnee.format)"
+      >
+      <span class="title">
+        {{item.donnee.fileName}} le {{item.donnee.date | date: 'dd/MM/yyyy HH:mm:ss'}}
+      </span>
+
+      <span *ngIf="youtubeObj.afficher" >
+         <span *ngIf="item.donnee.format =='mp3'">
+           <audio controls autoplay>
+           <source [src]="item.donnee.url">
+         </audio>
+      </span>
+
+      </span>
+    </div>
+    <div class="partager">
+      <div style="border-right: 2px #F2F4F7 solid; width: 50%; vertical-align: middle; text-align: center; ">
+        <!--<a class="liens" href="https://api.whatsapp.com/send?phone=%2B33753866034&text&app_absent=0" target="_blank">
+          &lt;!&ndash;<img class="img-share ml-2" [src]="this.icons8share30">&ndash;&gt;-->
+           <span class="box ml-2">
+           <!-- <input type="checkbox" id="checkbox" />-->
+            <div class="menu">
+          <!--    <a href="https://api.addthis.com/oexchange/0.8/forward/whatsapp/offer?url={{item.donnee.url}}&pubid=&title=Partagez&ct=1" target="_blank">-->
+                 <a href="https://api.addthis.com/oexchange/0.8/forward/whatsapp/offer?url={{item.donnee.url}}&pubid=&title=Partagez&ct=1" target="_blank">
+                <div class="menuItems">
+                  <i class="fab fa-whatsapp"></i>
+                </div>
+              </a>
+              <a href="https://api.addthis.com/oexchange/0.8/forward/facebook/offer?url={{item.donnee.url}}&pubid=&title=Partagez&ct=1" target="_blank">
+                <div class="menuItems">
+                  <i class="fab fa-facebook"></i>
+                </div>
+              </a>
+              <a href="https://api.addthis.com/oexchange/0.8/forward/twitter/offer?url={{item.donnee.url}}&pubid=&title=Partagez&ct=1" target="_blank">
+                <div class="menuItems">
+                  <i class="fab fa-twitter"></i>
+                </div>
+              </a>
+              <a href="https://api.addthis.com/oexchange/0.8/forward/instagram/offer?url={{item.donnee.url}}&pubid=&title=Partagez&ct=1" target="_blank">
+                <div class="menuItems">
+                  <i class="fab fa-instagram"></i>
+                </div>
+              </a>
+            </div>
+          </span>
+       <!-- </a>-->
+      </div>
+
+      <div style="border-left: 2px #F2F4F7 solid; width: 50%; vertical-align: middle; text-align: center">
+        <a class="liens" href="https://api.whatsapp.com/send?phone=%2B33753866034&text&app_absent=0" target="_blank">
+          <img class="img-temoigner ml-2" [src]="this.icons8voice26">
+          <span class="ml-2">Témoigner</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+

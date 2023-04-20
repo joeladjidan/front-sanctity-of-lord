@@ -1,0 +1,75 @@
+<body>
+<div class="container-xl">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-5">
+            <h2>Gestion des <b>Ames</b></h2>
+          </div>
+          <div class="col-sm-7">
+            <a routerLink="/ames/create-ames"  class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Ajouter</span></a>
+            <a href="http://localhost:8080/anagkazo/ames/report/list" target="_blank" class="btn btn-secondary"><i class="material-icons">&#xE24D;</i>
+                <span>Imprimer</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col" style="width: 3%">Civilité</th>
+          <th scope="col" style="width: 40%">Nom</th>
+          <th scope="col" style="width: 5%">Téléphone</th>
+          <th scope="col" style="width: 10%">Email</th>
+          <th scope="col" style="width: 20%">Lieux</th>
+          <th scope="col" style="width: 10%">Ville</th>
+          <th scope="col" style="width: 10%">Pays</th>
+          <th scope="col" style="width: 3%">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let post of ames">
+          <td>{{post.civilite?.intitule}}</td>
+          <td>{{post.nom}} {{post.prenom}}</td>
+          <td>{{post.telephone}}</td>
+          <td>{{post.email}}</td>
+          <td>{{post.localisation}}</td>
+          <td>{{post.ville?.intitule}}</td>
+          <td>{{post.pays?.intitule}}</td>
+          <td style="white-space: nowrap">
+            <button type="button" class="text-blue" (click)="getDetailAmes(post.id)">
+              <a href="#" class="text-blue" target="_blank">
+                <i class="material-icons" data-toggle="tooltip" title="Détails">&#xE417;</i>
+              </a>
+            </button>
+            <button type="button" class="text-blue">
+              <a href="#" [routerLink]="['/ames/', post.id, 'edit-ames']" class="text-blue">
+                <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
+              </a>
+            </button>
+            <button type="button" (click)="supprimer(post.id)" class="text-blue">
+              <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
+            </button>
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
+      <div class="clearfix">
+        <div class="hint-text">Afficher <b>5</b> sur <b>25</b> enregistrements</div>
+        <ul class="pagination">
+          <li class="page-item disabled"><a href="#">Avant</a></li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item active"><a href="#" class="page-link">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><a href="#" class="page-link">Suivant</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+

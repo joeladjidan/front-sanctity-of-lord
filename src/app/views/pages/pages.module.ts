@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { PagesRoutingModule } from './pages-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
@@ -10,6 +9,9 @@ import { ButtonModule, CardModule, FormModule, GridModule } from '@coreui/angula
 import { IconModule } from '@coreui/icons-angular';
 import {ReactiveFormsModule} from "@angular/forms";
 import {Page401Component} from "./page401/page401.component";
+import {HttpClientModule} from "@angular/common/http";
+import {BrowserModule} from "@angular/platform-browser";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -21,6 +23,9 @@ import {Page401Component} from "./page401/page401.component";
     Page401Component
   ],
   imports: [
+    BrowserModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
     CommonModule,
     PagesRoutingModule,
     ReactiveFormsModule,
@@ -29,7 +34,9 @@ import {Page401Component} from "./page401/page401.component";
     GridModule,
     IconModule,
     FormModule
+  ],
+  exports: [
+    HttpClientModule
   ]
 })
-export class PagesModule {
-}
+export class PagesModule {}

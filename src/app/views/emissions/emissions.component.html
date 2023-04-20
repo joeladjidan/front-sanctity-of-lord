@@ -1,0 +1,23 @@
+<div class="col-md-12">
+  <p class="bold center">
+    Les émissions
+  </p>
+
+  <span class="container">
+    <img style="height: 300px; width: 400px; display: block; margin-left: auto; margin-right: auto;"
+         src="{{logo}}"
+         alt="image"
+    >
+  </span>
+
+  <br><br>
+
+  <app-default-card *ngFor="let emission of this.listEmissions;"
+                    [item]="emission"
+                    [description]="emission.description"
+                    [typeEmission]="emission.typeEmission"
+                    [setToYoutubeBtn]="youtubeBtnObj"
+                    (managePlayingBtn) = "managePlayingBtnComponent($event)"
+  >
+  </app-default-card>
+</div>

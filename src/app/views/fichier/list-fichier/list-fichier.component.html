@@ -1,0 +1,66 @@
+<div class="container-xl">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-5">
+            <h2>Gestion des <b>fichiers</b></h2>
+          </div>
+          <div class="col-sm-7">
+            <a routerLink="/fichier/create-fichier"  class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Ajouter</span></a>
+            <a class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Imprimer</span></a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th scope="col" style="width: 120px">Nom du fichier</th>
+          <th scope="col" style="width: 200px">Url</th>
+          <th scope="col" style="width: 70px">Format</th>
+          <th scope="col" style="width: 150px">Date</th>
+          <th scope="col" style="width: 120px">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let post of donnee">
+          <td>{{ post.fileName }}</td>
+          <td>{{ post.url }}</td>
+          <td>{{ post.format }}</td>
+          <td>{{ post.date | date: "dd/MM/yyyy HH:mm:ss" }}</td>
+          <td style="white-space: nowrap">
+            <button type="button" class="text-blue" (click)="getDetailDonnee(post.id)">
+              <a href="#" class="text-blue" target="_blank">
+                <i class="material-icons" data-toggle="tooltip" title="Détails">&#xE417;</i>
+              </a>
+            </button>
+            <button type="button" class="text-blue">
+              <a href="#" [routerLink]="['/fichier/', post.id, 'edit-fichier']" class="text-blue">
+                <i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i>
+              </a>
+            </button>
+            <button type="button" (click)="delete(post.id)" class="text-blue">
+              <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="clearfix">
+        <div class="hint-text">Afficher <b>5</b> sur <b>25</b> enregistrements</div>
+        <ul class="pagination">
+          <li class="page-item disabled"><a href="#">Avant</a></li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item active"><a href="#" class="page-link">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><a href="#" class="page-link">Suivant</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

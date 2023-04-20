@@ -1,0 +1,243 @@
+<c-row ngPreserveWhitespaces>
+  <form [formGroup]="amesForm" (ngSubmit)="onSubmit()">
+    <c-col [sm]="12">
+      <c-card class="mb-4">
+        <c-card-header>
+          <strong>Ajouter une personne à suivre</strong>
+        </c-card-header>
+        <c-card-body>
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Photo</b>
+            </label>
+            <c-col [sm]="4">
+              <input cFormControl type="file"
+                     class="form-control"
+                     formControlName="photo"
+                     (change)="onFileSelected($event)"
+              />
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Civilité</b>
+              <span class="text-danger"
+                    *ngIf="amesForm.get('civilite').errors && amesForm.get('civilite').hasError('required')">*
+            </span>
+            </label>
+
+            <c-col [sm]="4">
+              <select #civilite cSelect
+                      formControlName="civilite"
+                      (change)="changeCivilite($event)">
+                <option value="">Choisir la civilité</option>
+                <option [value]="civilite.id"
+                        *ngFor="let civilite of listCivilite; index as i">
+                  {{civilite.intitule}}
+                </option>
+              </select>
+              <div *ngIf="amesForm.get('civilite').invalid && amesForm.get('civilite').errors && (amesForm.get('civilite').dirty
+                   || amesForm.get('civilite').touched)">
+                <small class="text-danger"
+                       *ngIf="amesForm.get('civilite').hasError('required')">
+                  La civilité est obligatoire.
+                </small>
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Pays</b>
+              <span class="text-danger"
+                    *ngIf="amesForm.get('pays').errors && amesForm.get('pays').hasError('required')">*
+              </span>
+            </label>
+            <c-col [sm]="4">
+              <select #pays cSelect
+                      formControlName="pays"
+                      (change)="changePays($event)">
+                <option value="">Choisir le pays...</option>
+                <option [value]="pays.id"
+                        *ngFor="let pays of listPays; index as i">
+                  {{pays.intitule}}
+                </option>
+              </select>
+              <div *ngIf="amesForm.get('pays').invalid && amesForm.get('pays').errors && (amesForm.get('pays').dirty
+                   || amesForm.get('pays').touched)">
+                <small class="text-danger"
+                       *ngIf="amesForm.get('pays').hasError('required')">
+                  Le pays est obligatoire.
+                </small>
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Code Postale</b>
+            </label>
+            <c-col [sm]="4">
+              <select #codePostale cSelect
+                      formControlName="codePostale"
+                      (change)="changeCodePostale($event)">
+                <option value="">Choisir le code postale...</option>
+                <option [value]="codePostale.id"
+                        *ngFor="let codePostale of listCodePostale; index as i">
+                  {{codePostale.code}}
+                </option>
+              </select>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Ville</b>
+            </label>
+          <c-col [sm]="4">
+            <select #ville cSelect
+                    formControlName="ville"
+                    (change)="changeVille($event)">
+            <option value="">Choisir la ville...</option>
+            <option [value]="ville.id"
+                    *ngFor="let ville of listVille; index as i">
+              {{ville.intitule}}
+            </option>
+          </select>
+
+          </c-col>
+        </c-row>
+
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Lieu</b>
+            </label>
+
+            <c-col [sm]="6">
+              <textarea cFormControl type="text"  class="form-control" formControlName="localisation" ></textarea>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-3">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Nom</b>
+              <span class="text-danger"
+                    *ngIf="amesForm.get('nom').errors && amesForm.get('nom').hasError('required')">*
+              </span>
+            </label>
+
+            <c-col [sm]="6">
+              <input cFormControl type="text"  class="form-control"  formControlName="nom"/>
+              <div *ngIf="amesForm.get('nom').invalid && amesForm.get('nom').errors && (amesForm.get('nom').dirty
+                   || amesForm.get('nom').touched)">
+                <small class="text-danger"
+                       *ngIf="amesForm.get('nom').hasError('required')">
+                  Le nom est obligatoire.
+                </small>
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-4">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Prénom</b>
+              <span class="text-danger"
+                    *ngIf="amesForm.get('prenom').errors && amesForm.get('prenom').hasError('required')">*
+              </span>
+            </label>
+
+            <c-col [sm]="6">
+              <input cFormControl type="text"  class="form-control"  formControlName="prenom"/>
+              <div *ngIf="amesForm.get('prenom').invalid && amesForm.get('prenom').errors && (amesForm.get('prenom').dirty
+                   || amesForm.get('prenom').touched)">
+                <small class="text-danger"
+                       *ngIf="amesForm.get('prenom').hasError('required')">
+                  Le prénom est obligatoire.
+                </small>
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-4">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Téléphone</b>
+              <span class="text-danger"
+                    *ngIf="amesForm.get('telephone').errors && amesForm.get('telephone').hasError('required')">*
+              </span>
+            </label>
+
+            <c-col [sm]="6">
+              <input cFormControl type="text"  class="form-control" formControlName="telephone"/>
+              <div *ngIf="amesForm.get('telephone').invalid && amesForm.get('telephone').errors && (amesForm.get('telephone').dirty
+                   || amesForm.get('telephone').touched)">
+                <small class="text-danger"
+                       *ngIf="amesForm.get('telephone').hasError('required')">
+                  Le numéro de téléphone est obligatoire.
+                </small>
+                <small class="text-danger"
+                       *ngIf="amesForm.get('telephone').hasError('pattern')">
+                  Veuillez saisir un numéro de téléphone valide.
+                </small>
+              </div>
+            </c-col>
+          </c-row>
+
+          <c-row class="mb-4">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Email</b>
+            </label>
+
+            <c-col [sm]="6">
+              <input cFormControl type="text"  class="form-control"  formControlName="email"/>
+              <div *ngIf="amesForm.get('email').invalid && amesForm.get('email').errors && (amesForm.get('email').dirty
+                   || amesForm.get('email').touched)">
+                <small class="text-danger"
+                       *ngIf="amesForm.get('email').hasError('pattern')">
+                  Veuillez saisir une adresse émail valide.
+                </small>
+              </div>
+            </c-col>
+          </c-row>
+
+         <c-row class="mb-4">
+            <label cLabel="col" cCol [sm]="4">
+              <b>Sujet de prière</b>
+            </label>
+            <c-col [sm]="8">
+              <textarea cFormControl type="text"  class="form-control" formControlName="sujet" ></textarea>
+            </c-col>
+          </c-row>
+
+        </c-card-body>
+      </c-card>
+    </c-col>
+  </form>
+
+  <br>
+  <c-col [sm]="12">
+    <c-card class="mb-6">
+      <c-card-body>
+        <div class="center">
+          <button cButton
+                  (click)="onReset()"
+                  class="bold">Annuler
+          </button>
+          &nbsp;&nbsp;&nbsp;
+          <button cButton (click)="onSubmit()"
+                  class="bold">Enregistrer
+          </button>
+        </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+
+
+
+</c-row>
+
+
+
+
+

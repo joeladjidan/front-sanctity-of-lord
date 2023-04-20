@@ -40,12 +40,13 @@ export class HttpInterceptorService implements HttpInterceptor {
     return next.handle(req)
       .pipe(tap((event: HttpEvent<any>) => {
         if (event instanceof HttpResponse) {
-          console.log(event);
+
         }
       }, (err: any) => {
         console.log(err);
         return this.router.navigate(['401']);
         if (err.status === 401) {
+          debugger;
           if (err.error.message === 'Token is expire') {
             const params = {
               token: this.token,

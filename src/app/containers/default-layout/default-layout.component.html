@@ -23,35 +23,39 @@
   </c-sidebar-brand>
     <perfect-scrollbar [config]="perfectScrollbarConfig">
   <!--  [perfectScrollbar]="perfectScrollbarConfig"-->
-  <c-sidebar-nav
-    [navItems]="navItems">
-  </c-sidebar-nav>
-    </perfect-scrollbar>
-  <c-sidebar-brand
-    [brandFull]="{
+    <c-sidebar-nav
+        [navItems]="navItems">
+     </c-sidebar-nav>
+  </perfect-scrollbar>
+  <a href="assets/Anagkazo.apk">
+    <c-sidebar-brand
+      [brandFull]="{
       src: 'assets/img/brand/googleplay.png',
       width: 100,
       height: 50,
-      alt: 'Google Pay'
+      alt: 'PlayStore'
     }"
-    routerLink="./"
-  >
-  </c-sidebar-brand>
-  <c-sidebar-brand
-    [brandFull]="{
+    >
+    </c-sidebar-brand>
+  </a>
+  <a href="assets/Anagkazo.apk">
+    <c-sidebar-brand
+      [brandFull]="{
       src: 'assets/img/brand/apple.svg',
       width: 100,
       height: 50,
-      alt: 'Apple Store'
+      alt: 'AppleStore'
     }"
-    routerLink="./"
-  >
-  </c-sidebar-brand>
+    >
+    </c-sidebar-brand>
+  </a>
+
   <c-sidebar-toggler
     *ngIf="!sidebar.narrow"
     toggle="unfoldable"
     cSidebarToggle="sidebar"
-  ></c-sidebar-toggler>
+  >
+  </c-sidebar-toggler>
 </c-sidebar>
 
 <!--main-->

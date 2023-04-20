@@ -1,6 +1,7 @@
 /* tslint:disable */
 
-import {DonneeDto} from "./donneeDto";
+
+import {DonneeDto} from "./donnee-dto";
 
 export interface GalerieDto {
   intitule?: string;

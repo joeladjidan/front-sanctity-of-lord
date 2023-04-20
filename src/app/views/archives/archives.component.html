@@ -1,0 +1,88 @@
+<div class="col-md-12">
+ <h2 class="center bold">Archivres</h2>
+
+  <div class="container center">
+    <span class="cols-md-6">
+      <select #selection cSelect class="mb-3" style="width:130px;">
+        <option value="2" [attr.selected]="2">Date</option>
+        <option value="1">Catégorie</option>
+      </select>
+    </span>
+
+    <span class="cols-md-6">
+      <select #mois cSelect class="mb-3" style="width: 190px;">
+        <option [ngValue]="mois.intitule" *ngFor="let mois of listMois; index as i"
+                [attr.selected]="0">
+          {{mois.intitule}}
+        </option>
+      </select>
+    </span>
+
+    <span class="cols-md-6">
+      <select #annee cSelect class="mb-3" style="width: 190px;">
+        <option [ngValue]="annee.intitule" *ngFor="let annee of listAnnee; index as i"
+                [attr.selected]="0">
+          {{annee.intitule}}
+        </option>
+      </select>
+    </span>
+  </div>
+
+  <div class="container center">
+    <span class="cols-md-8">
+      <button cButton class="mb-3" style="width:100px; background-color: #FFC61A ; border: none" (click)="onReset()" >
+        Annuler
+      </button>
+    </span>
+    <span class="cols-md-8" style="margin-left: 10px">
+      <button cButton class="mb-3" style="width:100px; background-color: #106BB1; border: none" (click)="onSelected()" >
+        Filtrer
+      </button>
+    </span>
+  </div>
+
+  <!--<div class="col-md-12 center">
+    <table>
+      <tr>
+        <td class="row-cols-md-6">
+          <select #selection cSelect class="mb-3" style="width:130px;">
+            <option value="2" [attr.selected]="2">Date</option>
+            <option value="1">Catégorie</option>
+          </select>
+        </td>
+        <td class="row-cols-md-6">
+          <select #mois cSelect class="mb-3" style="width: 190px;">
+            <option [ngValue]="mois.intitule" *ngFor="let mois of listMois; index as i"
+                    [attr.selected]="0">
+              {{mois.intitule}}
+            </option>
+          </select>
+        </td>
+        <td class="row-cols-md-6">
+          <select #annee cSelect class="mb-3" style="width: 190px;">
+            <option [ngValue]="annee.intitule" *ngFor="let annee of listAnnee; index as i"
+                    [attr.selected]="0">
+              {{annee.intitule}}
+            </option>
+          </select>
+        </td>
+        <td class="row-cols-md-6">
+          <button cButton class="mb-3" style="width:100px; background-color: #106BB1; border: none" (click)="onSelected()" >
+            Filtrer
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>-->
+
+  <br>
+
+  <app-default-card *ngFor="let item of this.listArchivre;"
+                    [item]="item"
+                    (managePlayingBtn) = "managePlayingBtnComponent($event)"
+  >
+  </app-default-card>
+
+  <app-chargement *ngIf="isLoading">{{ isLoading }}</app-chargement>
+
+</div>

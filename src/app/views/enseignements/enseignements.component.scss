@@ -1,0 +1,46 @@
+.bold {
+  font-weight: bold;
+  color: #0363AD;
+  padding-left: 25%;
+  font-family: "Bookman Old Style";
+}.center {
+ display: flex;
+ text-align: center;
+ align-items: center;
+ justify-content: center;
+}.image-style {
+  width: 400px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-left: 25%;
+}.content {
+ display: inline-block;
+ position: relative;
+ /* Move the element to the right by 50% of the container's width */
+ padding-left: 25%;
+ /* Calculates 50% of the element's width, and moves it by that */
+ /* amount across the X-axis to the left */
+ transform: translateX(-50%);
+}
+body {
+  padding: 2rem;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  box-shadow: 15px 10px 25px 0px  #024F8E;
+  background: #fff;
+  background-image: url('../../../assets/img/brand/logo-sanctity.jpg'), url('../../../assets/img/brand/logo.gif');
+  background-repeat: no-repeat, no-repeat;
+  background-position: 0% 20%, 70% 50%;
+  background-size: 30%, 70%;
+  animation: open .5s;
+}.container {
+   position: relative;
+   padding: 0.5rem;
+   overflow: hidden;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+}

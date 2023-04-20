@@ -9,20 +9,81 @@ import {RouterModule, Routes} from "@angular/router";
 
 const routes: Routes = [
   { path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'emissions',
     pathMatch: 'full'
   },
   {
     path: '',
-  //  canActivate: [ApplicationGuard],
+ //   canActivate: [ApplicationGuard],
     component: DefaultLayoutComponent,
     data: {
       title: 'Accueil'
     },
     children: [
       {
-        path: 'dashboard',
-        loadChildren: () => import('./views/dashboard/dashboard.module').then((m) => m.DashboardModule)
+        path: 'annonce',
+        loadChildren: () => import('./views/annonce/annonce.module').then((m) => m.AnnonceModule)
+      },
+      {
+        path: 'emissions',
+        loadChildren: () => import('./views/emissions/emissions.module').then((m) => m.EmissionsModule)
+      },
+      {
+        path: 'apropos',
+        loadChildren: () =>
+          import('./views/apropos/apropos.module').then((m) => m.AproposModule)
+      },
+      {
+        path: 'galerie',
+        loadChildren: () => import('./views/galerie/galerie.module').then((m) => m.GalerieModule)
+      },
+      {
+        path: 'enseignements',
+        loadChildren: () =>
+          import('./views/enseignements/enseignements.module').then((m) => m.EnseignementsModule)
+      },
+      {
+        path: 'fichier',
+        loadChildren: () =>
+          import('./views/fichier/fichier.module').then((m) => m.FichierModule)
+      },
+      {
+        path: 'medias',
+        loadChildren: () =>
+          import('./views/medias/medias.module').then((m) => m.MediasModule)
+      },
+      {
+        path: 'archives',
+        loadChildren: () => import('./views/archives/archives.module').then((m) => m.ArchivesModule)
+      },
+      {
+        path: 'utilisateurs',
+        loadChildren: () => import('./views/utilisateurs/utilisateurs.module').then((m) => m.UtilisateursModule)
+      },
+      {
+        path: 'ames',
+        data: {
+          title: 'Liste des Ames'
+        },
+        loadChildren: () => import('./views/ames/ames.module').then((m) => m.AmesModule)
+      },
+      {
+        path: 'don',
+        data: {
+          title: 'Faire un don'
+        },
+        loadChildren: () => import('./views/don/don.module').then((m) => m.DonModule)
+      },
+      {
+        path: 'assistance',
+        data: {
+          title: 'Pour tous besoin d\'assistance'
+        },
+        loadChildren: () => import('./views/assistance/assistance.module').then((m) => m.AssistanceModule)
+      },
+      {
+        path: 'contact',
+        loadChildren: () => import('./views/contact/contact.module').then((m) => m.ContactModule)
       },
       {
         path: 'theme',
@@ -53,54 +114,9 @@ const routes: Routes = [
         loadChildren: () => import('./views/notifications/notifications.module').then((m) => m.NotificationsModule)
       },
       {
-        path: 'widgets',
-        loadChildren: () => import('./views/widgets/widgets.module').then((m) => m.WidgetsModule)
-      },
-      {
         path: 'pages',
         loadChildren: () =>
           import('./views/pages/pages.module').then((m) => m.PagesModule)
-      },
-      {
-        path: 'emissions',
-        loadChildren: () => import('./views/emissions/emissions.module').then((m) => m.EmissionsModule)
-      },
-      {
-        path: 'apropos',
-        loadChildren: () =>
-          import('./views/apropos/apropos.module').then((m) => m.AproposModule)
-      },
-      {
-        path: 'galerie',
-        loadChildren: () => import('./views/galerie/galerie.module').then((m) => m.GalerieModule)
-      },
-      {
-        path: 'enseignements',
-        loadChildren: () =>
-          import('./views/enseignements/enseignements.module').then((m) => m.EnseignementsModule)
-      },
-      {
-        path: 'archives',
-        loadChildren: () => import('./views/archives/archives.module').then((m) => m.ArchivesModule)
-      },
-      {
-        path: 'utilisateurs',
-        loadChildren: () =>
-          import('./views/utilisateurs/utilisateurs.module').then((m) => m.UtilisateursModule)
-      },
-      {
-        path: 'contacts',
-        data: {
-          title: 'Nous contacter'
-        },
-        loadChildren: () => import('./views/contacts/contacts.module').then((m) => m.ContactsModule)
-      },
-      {
-        path: 'don',
-        data: {
-          title: 'Faire un don'
-        },
-        loadChildren: () =>  import('./views/don/don.module').then((m) => m.DonModule)
       }
     ]
   },

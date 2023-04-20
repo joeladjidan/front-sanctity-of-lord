@@ -1,0 +1,136 @@
+<div class="container-xl">
+  <div class="table-responsive">
+    <div class="table-wrapper">
+      <div class="table-title">
+        <div class="row">
+          <div class="col-sm-5">
+            <h2>Gestion des <b>Ames</b></h2>
+          </div>
+          <div class="col-sm-7">
+            <a  class="btn btn-secondary"><i class="material-icons">&#xE147;</i> <span>Ajouter</span></a>
+            <a  class="btn btn-secondary"><i class="material-icons">&#xE24D;</i> <span>Imprimer</span></a>
+          </div>
+        </div>
+      </div>
+      <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+          <th>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="selectAll">
+								<label for="selectAll"></label>
+							</span>
+          </th>
+          <th scope="col" style="width: 10px">ID</th>
+          <th scope="col" style="width: 200px">Nom</th>
+          <th scope="col" style="width: 120px">Email</th>
+          <th scope="col" style="width: 180px">Adresse</th>
+          <th scope="col" style="width: 120px">Ville</th>
+          <th scope="col" style="width: 120px">Pays</th>
+          <th scope="col" style="width: 120px">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let utilisateur of this.listUtilisateurs">
+          <td>
+							<span class="custom-checkbox">
+								<input type="checkbox" id="checkbox1" name="options[]" value="1">
+								<label for="checkbox1"></label>
+							</span>
+          </td>
+          <td>{{ utilisateur.id }}</td>
+          <td>{{ utilisateur.nom }} {{ utilisateur.prenom }}</td>
+          <td>{{ utilisateur.email }}</td>
+          <td>{{ utilisateur.dateDeNaissance }}</td>
+          <td>{{ utilisateur.numTel }}</td>
+          <td>{{ utilisateur.adresse }}, {{ utilisateur.adresse }}</td>
+          <td>{{ utilisateur.adresse.codePostale}} {{ utilisateur.adresse.adresse1 }}</td>
+          <td>{{ utilisateur.roles }}, {{ utilisateur.roles }}</td>
+          <td>
+            <a class="view" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Détails">&#xE417;</i></a>
+            <a  class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Modifier">&#xE254;</i></a>
+            <a class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i></a>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="clearfix">
+        <div class="hint-text">Afficher <b>5</b> sur <b>25</b> enregistrements</div>
+        <ul class="pagination">
+          <li class="page-item disabled"><a href="#">Avant</a></li>
+          <li class="page-item"><a href="#" class="page-link">1</a></li>
+          <li class="page-item"><a href="#" class="page-link">2</a></li>
+          <li class="page-item active"><a href="#" class="page-link">3</a></li>
+          <li class="page-item"><a href="#" class="page-link">4</a></li>
+          <li class="page-item"><a href="#" class="page-link">5</a></li>
+          <li class="page-item"><a href="#" class="page-link">Suivant</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!--<app-modal #addModal [modalConfig]="addModalConfig">
+  <form>
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" class="form-control" required>
+    </div>
+    <div class="form-group">
+      <label>Address</label>
+      <textarea class="form-control" required></textarea>
+    </div>
+    <div class="form-group">
+      <label>Phone</label>
+      <input type="text" class="form-control" required>
+    </div>
+  </form>
+</app-modal>
+
+&lt;!&ndash; Edit Modal HTML &ndash;&gt;
+<app-modal #editModal [modalConfig]="editModalConfig">
+  <form>
+    <div class="modal-body">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" class="form-control" required>
+      </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea class="form-control" required></textarea>
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input type="text" class="form-control" required>
+      </div>
+    </div>
+  </form>
+</app-modal>
+
+&lt;!&ndash; Delete Modal HTML &ndash;&gt;
+<app-modal #deleteModal [modalConfig]="deleteModalConfig">
+  <form>
+    <div class="modal-header">
+      <h4 class="modal-title">Delete Employee</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to delete these Records?</p>
+      <p class="text-warning"><small>This action cannot be undone.</small></p>
+    </div>
+  </form>
+</app-modal>-->
+
+
+
+

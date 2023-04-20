@@ -1,0 +1,314 @@
+<c-row ngPreserveWhitespaces>
+ <form [formGroup]="donneeForm " (ngSubmit)="onSubmit()">
+  <c-col xs="8">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Ajouter une donnée</strong>
+      </c-card-header>
+      <c-card-body>
+
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="2">
+            <b>Format</b>
+          </label>
+
+          <c-col [sm]="4">
+            <select cSelect formControlName="format"
+                    (change)="changeFormat($event)"
+                    class="form-control">
+              <option value="jpg">JPG</option>
+              <option value="mp4">MP4</option>
+              <option value="mp3">MP3</option>
+            </select>
+            <div *ngIf="f['format'].touched && f['format'].invalid" class="alert alert-danger">
+              <div *ngIf="f['format'].errors && f['format'].errors['required']">Format obligatoire.</div>
+            </div>
+          </c-col>
+        </c-row>
+
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="2">
+            <b>Nom du Fichier</b>
+          </label>
+          <c-col [sm]="6">
+            <input cFormControl type="text"  class="form-control"  formControlName="fileName"/>
+              <div *ngIf="f['fileName'].touched && f['fileName'].invalid" class="alert alert-danger">
+              <div *ngIf="f['fileName'].errors && f['fileName'].errors['required']">Nom du fichier obligatoire.</div>
+              <div *ngIf="f['fileName'].errors && f['fileName'].errors['maxLength']">Saisir maximum 25 caracteres.</div>
+              <div *ngIf="f['fileName'].errors && f['fileName'].errors['minLength']">Saisir minimum 5 caracteres.</div>
+            </div>
+          </c-col>
+        </c-row>
+
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="2">
+            <b>Url</b>
+          </label>
+          <c-col [sm]="8">
+            <textarea cFormControl type="text"  class="form-control" formControlName="url" ></textarea>
+            <div *ngIf="f['url'].touched && f['url'].invalid" class="alert alert-danger">
+              <div *ngIf="f['url'].errors && f['url'].errors['required']">Url obligatoire.</div>
+              <div *ngIf="f['url'].errors && f['url'].errors['pattern']">Saisir url valide.</div>
+            </div>
+          </c-col>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col xs="8">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Type de donnée</strong>
+      </c-card-header>
+      <c-card-body>
+        <c-row class="mb-3 center">
+          <c-col [sm]="8">
+            <c-form-check>
+              <input cFormCheckInput
+                     type="radio"
+                     value="1"
+                     name="flexRadioDefault"
+                     (click)="selectDonnee($event)" />
+              <label cFormCheckLabel>Enseignement</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput
+                     type="radio"
+                     value="2"
+                     name="flexRadioDefault"
+                     (click)="selectDonnee($event)"  />
+              <label cFormCheckLabel>Emission</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput
+                     type="radio"
+                     value="3"
+                     name="flexRadioDefault"
+                     (click)="selectDonnee($event)" />
+              <label cFormCheckLabel>Galérie</label>
+            </c-form-check>
+            <c-form-check>
+              <input cFormCheckInput
+                     type="radio"
+                     value="4"
+                     name="flexRadioDefault"
+                     (click)="selectDonnee($event)"  />
+              <label cFormCheckLabel>Archivre</label>
+            </c-form-check>
+          </c-col>
+        </c-row>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col *ngIf="isEnseignement" xs="8">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Enseignement</strong>
+      </c-card-header>
+      <c-card-body>
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="3">
+            <b>Type Message</b>
+          </label>
+
+          <c-col [sm]="8">
+            <select #titreMessage cSelect class="mb-3"
+                    formControlName="titreMessage"
+                    style="width: 190px;">
+              <option [ngValue]="titreMessage.id"
+                      *ngFor="let titreMessage of listTitreMessage; index as i"
+                      [attr.selected]="titreMessage.id">
+                {{titreMessage.intitule}}
+              </option>
+            </select>
+            <div *ngIf="f['titreMessage'].touched && f['titreMessage'].invalid" class="alert alert-danger">
+              <div *ngIf="f['titreMessage'].errors && f['titreMessage'].errors['required']">Titre Message obligatoire.</div>
+            </div>
+          </c-col>
+        </c-row>
+
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="3">
+            <b>Type Emission</b>
+          </label>
+
+          <c-col [sm]="8">
+            <select #typeEmission cSelect class="mb-3"
+                    formControlName="typeEmission"
+                    style="width: 190px;">
+              <option [ngValue]="typeEmission.id"
+                      *ngFor="let typeEmission of listTypeEmission; index as i"
+                      [attr.selected]="typeEmission.id">
+                {{typeEmission.intitule}}
+              </option>
+            </select>
+            <div *ngIf="f['typeEmission'].touched && f['typeEmission'].invalid" class="alert alert-danger">
+              <div *ngIf="f['typeEmission'].errors && f['typeEmission'].errors['required']">Type Emission obligatoire.</div>
+            </div>
+          </c-col>
+        </c-row>
+
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="3">
+            <b>Type Enseignement</b>
+          </label>
+
+          <c-col [sm]="8">
+            <select #typeEnseignement cSelect class="mb-3"
+                    formControlName="typeEnseignement"
+                    style="width: 190px;">
+              <option [ngValue]="typeEnseignement.id"
+                      *ngFor="let typeEnseignement of listTypeEnseignement; index as i"
+                      [attr.selected]="typeEnseignement.id">
+                {{ typeEnseignement.intitule }}
+              </option>
+            </select>
+            <div *ngIf="f['typeEnseignement'].touched && f['typeEnseignement'].invalid" class="alert alert-danger">
+              <div *ngIf="f['typeEnseignement'].errors && f['typeEnseignement'].errors['required']">Type Enseignement obligatoire.</div>
+            </div>
+          </c-col>
+        </c-row>
+
+        <c-row class="mb-3">
+          <label cLabel="col" cCol [sm]="3">
+            <b>Description</b>
+          </label>
+          <c-col [sm]="8">
+            <textarea cFormControl type="text"  class="form-control" formControlName="description" ></textarea>
+            <div *ngIf="f['description'].touched && f['description'].invalid" class="alert alert-danger">
+              <div *ngIf="f['description'].errors && f['description'].errors['required']">Description obligatoire.</div>
+            </div>
+          </c-col>
+        </c-row>
+
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col *ngIf="isEmission" xs="8">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Emission</strong>
+      </c-card-header>
+      <c-card-body>
+
+
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+  <c-col *ngIf="isGalerie" xs="8">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Galerie</strong>
+      </c-card-header>
+      <c-card-body>
+        <div class="center">
+
+        </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+
+   <c-col *ngIf="isArchive" xs="8">
+     <c-card class="mb-4">
+       <c-card-header>
+         <strong>Archivre</strong>
+       </c-card-header>
+       <c-card-body>
+         <div class="center">
+
+         </div>
+       </c-card-body>
+     </c-card>
+   </c-col>
+  </form>
+  <c-col xs="8">
+    <c-card class="mb-4">
+      <c-card-header>
+        <strong>Valider</strong>
+      </c-card-header>
+      <c-card-body>
+          <div class="center">
+            <button cButton
+                    (click)="onReset()"
+                    class="bold">Annuler
+            </button>
+            &nbsp;&nbsp;&nbsp;
+            <button cButton (click)="onSubmit()"
+                    class="bold">Enregistrer
+            </button>
+          </div>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+
+
+<c-row>
+  <c-col [sm]="6">
+    <c-card class="mb-4">
+      <c-card-body>
+        <h5 cCardTitle>Card title</h5>
+        <p cCardText>
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </p>
+        <button cButton color="primary">Go somewhere</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col [sm]="6">
+    <c-card class="mb-4">
+      <c-card-body>
+        <h5 cCardTitle>Card title</h5>
+        <p cCardText>
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </p>
+        <button cButton color="primary">Go somewhere</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <br>
+  <c-col [sm]="6">
+    <c-card class="mb-4">
+      <c-card-body>
+        <h5 cCardTitle>Card title</h5>
+        <p cCardText>
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </p>
+        <button cButton color="primary">Go somewhere</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <c-col [sm]="6">
+    <c-card class="mb-4">
+      <c-card-body>
+        <h5 cCardTitle>Card title</h5>
+        <p cCardText>
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </p>
+        <button cButton color="primary">Go somewhere</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+  <br>
+  <c-col [sm]="12">
+    <c-card class="mb-6">
+      <c-card-body>
+        <h5 cCardTitle>Card title</h5>
+        <p cCardText>
+          Some quick example text to build on the card title and make up the bulk of the card's content.
+        </p>
+        <button cButton color="primary">Go somewhere</button>
+      </c-card-body>
+    </c-card>
+  </c-col>
+</c-row>
+
+
+
+
+

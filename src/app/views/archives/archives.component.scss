@@ -1,0 +1,25 @@
+.bold {
+  font-weight: bold;
+}.center {
+   display: flex;
+   text-align: center;
+   align-items: center;
+   justify-content: center;
+}.image-style {
+  width: 400px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  padding-left: 25%;
+}.content {
+   display: inline-block;
+   position: relative;
+   /* Move the element to the right by 50% of the container's width */
+   padding-left: 25%;
+   /* Calculates 50% of the element's width, and moves it by that */
+   /* amount across the X-axis to the left */
+   transform: translateX(-50%);
+}.body {
+  padding: 2rem;
+}
