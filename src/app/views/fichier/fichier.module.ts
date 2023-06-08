@@ -1,14 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
-import { FichierRoutingModule } from './fichier-routing.module';
+import {FichierRoutingModule} from './fichier-routing.module';
 import {
+  AccordionModule,
   ButtonGroupModule,
   ButtonModule,
   CardModule,
   DropdownModule,
   FormModule,
-  GridModule, ListGroupModule, SharedModule,
+  GridModule,
+  ListGroupModule,
+  SharedModule,
   SpinnerModule
 } from "@coreui/angular";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
@@ -30,6 +33,7 @@ import {ImageCropperModule} from "ngx-image-cropper";
     FormModule,
     ReactiveFormsModule,
     CommonModule,
+    AccordionModule,
     SharedModule,
     CardModule,
     GridModule,

@@ -1,7 +1,6 @@
 .bold {
   font-weight: bold;
 }
-
 .color input {
   background-color: #f1f1f1;
 }
@@ -55,16 +54,6 @@ form{
   flex-direction: column;
 }
 
-.custom-file-upload {
-  border-radius: 50%;
-  display: inline-block;
-  position: relative;
-  padding: 6px;
-  cursor: pointer;
-  background: linear-gradient(270deg, #3fa1a9, #79f1a4);
-  margin-bottom: 25px;
-}
-
 .img-wrap {
   position: relative;
   width: 200px;
@@ -81,7 +70,6 @@ form{
   left: 50%;
   transform: translate(-50%, -50%);
   text-align: center;
-  color: #63d3a6;
   width: 200px;
   height: 200px;
   border-radius: 50%;
@@ -130,7 +118,7 @@ input::placeholder {
   max-width: 220px;
   overflow-wrap: break-word;
 }
-button{
+.btn {
   position: relative;
   color: #054231;
   letter-spacing: 1px;
@@ -143,7 +131,6 @@ button{
   cursor: pointer;
   border-radius: 25px;
   border: none;
-  background: #64d488;
 }
 .save {
   font-weight: 600;
@@ -156,12 +143,6 @@ button{
 .edit {
   color: #fff;
   width: 180px;
-}
-button:hover{
-  left: 0;
-  color: #fff;
-  width: 180px;
-  box-shadow: 0px 0px 20px 0px  #63d3a6;
 }
 button:focus{
   outline: none;
@@ -181,21 +162,6 @@ button:focus{
 }
 .lds-ripple div:nth-child(2) {
   animation-delay: -0.5s;
-}
-
-
-.fa-instagram{
-  position: absolute;
-  color: #79f1a4;
-  top: 3%;
-  right: 2%;
-  font-size: 38px;
-}
-.fa-instagram:hover{
-  font-size: 42px;
-  color: #caff81;
-  transition: all .1s linear;
-  cursor: pointer;
 }
 
 .text-danger {

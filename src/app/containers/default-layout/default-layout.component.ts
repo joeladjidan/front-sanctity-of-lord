@@ -43,12 +43,12 @@ export class DefaultLayoutComponent implements OnInit {
                 url: '/fichier/list-fichier',
                 iconComponent: { name: 'cilFile' }
               },
-            /*  {
+              {
                 name: 'Gestion des médias',
                 url: '/medias/list-medias',
                 class: "display-block",
                 iconComponent: { name: 'cilFile' }
-              },*/
+              },
               {
                 name: 'Suivies de personnes',
                 url: '/ames/list-ames',

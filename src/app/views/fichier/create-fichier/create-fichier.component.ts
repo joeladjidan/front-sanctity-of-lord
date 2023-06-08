@@ -1,11 +1,7 @@
-import {
-  AfterContentInit, AfterViewInit,
-  Component, ElementRef,
-  OnInit, ViewChild,
-} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import { Observable } from 'rxjs';
+import {Observable} from 'rxjs';
 import Swal from 'sweetalert2';
 import {DonneeDto} from "../../../models/donnee-dto";
 import {UtilisateursService} from "../../../services/utilisateurs.service";
@@ -23,6 +19,7 @@ import {EmissionsService} from "../../../services/emissions.service";
 import {GalerieDto} from "../../../models/galerie-dto";
 import {EmissionDto} from "../../../models/emission-dto";
 import {parseDate} from "ngx-bootstrap/chronos";
+import {MatAccordion} from "@angular/material/expansion";
 
 @Component({
   selector: 'app-create-fichier',
@@ -30,6 +27,7 @@ import {parseDate} from "ngx-bootstrap/chronos";
   styleUrls: ['./create-fichier.component.scss']
 })
 export class CreateFichierComponent implements OnInit, AfterContentInit , AfterViewInit {
+  @ViewChild(MatAccordion) accordion: MatAccordion;
 
   @ViewChild('dateFihier') myInputElementRef: ElementRef;
 

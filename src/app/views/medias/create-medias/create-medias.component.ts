@@ -1,101 +1,110 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {UtilisateursService} from "../../../services/utilisateurs.service";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpEventType, HttpResponse} from "@angular/common/http";
+import {DonneeService} from "../../../services/donnee.service";
+import {tap} from "rxjs/operators";
+import {FichierDetails} from "../../../models/fichier-details";
+import {MatAccordion} from "@angular/material/expansion";
 
 @Component({
   selector: 'app-create-medias',
   templateUrl: './create-medias.component.html',
-  styleUrls: ['./create-medias.component.scss']
+  styleUrls: ['./create-medias.component.scss'],
+  standalone: false,
+
 })
 export class CreateMediasComponent implements OnInit {
-
-  formData: FormGroup;
-  fileToUpload1: File;
-  fileToUpload2: File;
-
-  imageSrc1: string = '';
-  imageSrc2: string = ''
+  @ViewChild(MatAccordion) accordion: MatAccordion;
+  panelOpenState = false;
 
   loggedIn: boolean;
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder,
-    private utilisateurService: UtilisateursService,
-    private httpClient: HttpClient
-  ) {
+  loaded = 0;
+  selectedFiles: FileList;
+  showProgress = false;
+  mediaForm: FormGroup;
+  uploadedFiles: FichierDetails[] = [];
+
+  constructor(private http: HttpClient,
+              private router: Router,
+              private route: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private utilisateurService: UtilisateursService,
+              private donneeService: DonneeService)
+  {
     this.loggedIn = this.utilisateurService.loggedIn.getValue();
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
+
+  onSubmit() {
 
   }
 
-  onReset() {
-    this.formData.reset() ;
+   onReset() {
     this.router.navigateByUrl('medias/list-medias');
   }
 
   ngAfterContentInit(): void {
     this.loggedIn = this.utilisateurService.loggedIn.getValue();
-    this.formData = this.formBuilder.group({
-      files   : []
+  }
+
+  selectFile(event) {
+    this.selectedFiles = event.target.files;
+  }
+
+  AjouterPhotos() {
+    this.showProgress = true;
+    this.uploadedFiles = [];
+    Array.from(this.selectedFiles).forEach(file => {
+      const detailsFichier = new FichierDetails();
+      detailsFichier.name = file.name;
+      this.uploadedFiles.push(detailsFichier);
+      this.donneeService.enregistrerFichier(file, "2")
+        .pipe(tap(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.loaded = Math.round(100 * event.loaded / event.total);
+            detailsFichier.progress = this.loaded;
+          }
+        })).subscribe(event => {
+        if (event instanceof HttpResponse) {
+          if (this.selectedFiles.item(this.selectedFiles.length - 1) === file) {
+            // Invokes fetchFileNames() when last file in the list is uploaded.
+            this.donneeService.fetchFileNames("2");
+          }
+        }
+      });
+    });
+  }
+
+  AjouterAudios() {
+    this.showProgress = true;
+    this.uploadedFiles = [];
+    Array.from(this.selectedFiles).forEach(file => {
+      const detailsFichier = new FichierDetails();
+      detailsFichier.name = file.name;
+      this.uploadedFiles.push(detailsFichier);
+      this.donneeService.enregistrerFichier(file, "1")
+        .pipe(tap(event => {
+          if (event.type === HttpEventType.UploadProgress) {
+            this.loaded = Math.round(100 * event.loaded / event.total);
+            detailsFichier.progress = this.loaded;
+          }
+        })).subscribe(event => {
+        if (event instanceof HttpResponse) {
+          if (this.selectedFiles.item(this.selectedFiles.length - 1) === file) {
+            // Invokes fetchFileNames() when last file in the list is uploaded.
+            this.donneeService.fetchFileNames("1");
+          }
+        }
+      });
     });
   }
 
 
-  handleFileInput1(event) {
-    this.fileToUpload1 = <File>event.target.files[0];
-    const reader = new FileReader();
 
-    if(event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
 
-      reader.onload = () => {
 
-        this.imageSrc1 = reader.result as string;
 
-      };
-
-    }
-  }
-
-  handleFileInput2(event) {
-    this.fileToUpload2 = <File>event.target.files[0];
-    const reader = new FileReader();
-
-    if(event.target.files && event.target.files.length) {
-      const [file] = event.target.files;
-      reader.readAsDataURL(file);
-
-      reader.onload = () => {
-
-        this.imageSrc2 = reader.result as string;
-
-      };
-
-    }
-  }
-
-  onSubmit(): void {
-
-    const formData: FormData = new FormData();
-    formData.append('document', this.fileToUpload1, this.fileToUpload1.name+'_pp');
-    formData.append('document', this.fileToUpload2, this.fileToUpload2.name+'_ss');
-
-    let url = 'http://localhost:8080/api/upload/documents';
-
-    this.httpClient
-      .post(url, formData, {observe: 'response'}).subscribe(
-      resp => {
-        console.log(resp.body);
-      },
-      err => {
-        console.log(err);
-
-      });
-  }
 }

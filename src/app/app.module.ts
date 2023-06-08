@@ -1,26 +1,19 @@
-import { NgModule } from '@angular/core';
-import { HashLocationStrategy, LocationStrategy} from '@angular/common';
-import { StickyNavModule } from 'ng2-sticky-nav';
-import { NgxScrollTopModule } from 'ngx-scrolltop';
-import { NgxAudioPlayerModule } from 'ngx-audio-player';
+import {NgModule} from '@angular/core';
+import {HashLocationStrategy, LocationStrategy} from '@angular/common';
+import {StickyNavModule} from 'ng2-sticky-nav';
+import {NgxScrollTopModule} from 'ngx-scrolltop';
+import {NgxAudioPlayerModule} from 'ngx-audio-player';
 import {
   PERFECT_SCROLLBAR_CONFIG,
   PerfectScrollbarConfigInterface,
   PerfectScrollbarModule,
 } from 'ngx-perfect-scrollbar';
-
 // Import routing module
-import { AppRoutingModule } from './app-routing.module';
-
+import {AppRoutingModule} from './app-routing.module';
 // Import app component
-import { AppComponent } from './app.component';
-
+import {AppComponent} from './app.component';
 // Import containers
-import {
-  DefaultFooterComponent,
-  DefaultHeaderComponent,
-  DefaultLayoutComponent,
-} from './containers';
+import {DefaultFooterComponent, DefaultHeaderComponent, DefaultLayoutComponent,} from './containers';
 
 import {
   AvatarModule,
@@ -43,25 +36,25 @@ import {
   UtilitiesModule,
 } from '@coreui/angular';
 
-import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { IconModule, IconSetService } from '@coreui/icons-angular';
+import {CarouselModule} from 'ngx-bootstrap/carousel';
+import {IconModule, IconSetService} from '@coreui/icons-angular';
 import {ApiConfiguration, ApiConfigurationInterface} from "./api-configuration";
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HttpInterceptorService} from "./services/http-interceptor.service";
-import { EnseignementsComponent } from './views/enseignements/enseignements.component';
-import { ArchivesComponent } from './views/archives/archives.component';
-import { AproposComponent } from './views/apropos/apropos.component';
-import { EmissionsComponent} from "./views/emissions/emissions.component";
+import {EnseignementsComponent} from './views/enseignements/enseignements.component';
+import {ArchivesComponent} from './views/archives/archives.component';
+import {AproposComponent} from './views/apropos/apropos.component';
+import {EmissionsComponent} from "./views/emissions/emissions.component";
 import {DefaultAudioComponent} from "./containers/default-audio/default-audio.component";
-import { DefaultVideoComponent } from './containers/default-video/default-video.component';
-import { DefaultCardComponent } from './containers/default-card/default-card.component';
-import { DonComponent } from './views/don/don.component';
+import {DefaultVideoComponent} from './containers/default-video/default-video.component';
+import {DefaultCardComponent} from './containers/default-card/default-card.component';
+import {DonComponent} from './views/don/don.component';
 import {BrowserModule, Title} from "@angular/platform-browser";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {ReactiveFormsModule} from "@angular/forms";
 import {GalerieComponent} from "./views/galerie/galerie.component";
 import {NgImageFullscreenViewModule} from "ng-image-fullscreen-view";
-import { SafePipe } from './pipe/safe.pipe';
+import {SafePipe} from './pipe/safe.pipe';
 import {NgxDatatableModule} from "@swimlane/ngx-datatable";
 import {ComponentsModule} from "./shared/components/components.module";
 import {NgxVideoListPlayerModule} from "ngx-video-list-player";
@@ -77,14 +70,14 @@ import {NotificationsModule} from "./views/notifications/notifications.module";
 import {UtilisateursModule} from "./views/utilisateurs/utilisateurs.module";
 import {PagesModule} from './views/pages/pages.module';
 import {HttpModule} from "@angular/http";
-import { ChargementComponent } from './views/chargement/chargement.component';
+import {ChargementComponent} from './views/chargement/chargement.component';
 import {FichierModule} from './views/fichier/fichier.module';
 import {ContactModule} from "./views/contact/contact.module";
-import {CreateMediasComponent} from "./views/medias/create-medias/create-medias.component";
-import {ListMediasComponent} from "./views/medias/list-medias/list-medias.component";
 import {MediasModule} from "./views/medias/medias.module";
-import { AssistanceComponent } from './views/assistance/assistance.component';
+import {AssistanceComponent} from './views/assistance/assistance.component';
 import {AssistanceModule} from "./views/assistance/assistance.module";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -167,7 +160,10 @@ const APP_CONTAINERS = [
     MatIconModule,
     MatSelectModule,
     MatSidenavModule,
+    MatIconModule,
+    MatSnackBarModule,
     MatCardModule,
+    MatProgressBarModule,
     PagesModule
   ],
   providers: [

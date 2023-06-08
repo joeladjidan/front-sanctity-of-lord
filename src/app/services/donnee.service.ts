@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BaseService as __BaseService} from "@docs-components/base-service";
 import {HttpClient, HttpErrorResponse, HttpEvent, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
 import {ApiConfiguration as __Configuration} from "../api-configuration";
@@ -41,16 +41,28 @@ export class DonneeService extends __BaseService {
       )
   }
 
-  enregistrerFichier(file: File): Observable<HttpEvent<any>> {
+  enregistrerFichier(fichier: File, type: string): Observable<HttpEvent<{}>> {
     const formData: FormData = new FormData();
+    formData.append('fichier', fichier);
+    formData.append('typeFichier', type);
+    console.log(formData);
+    return this.http.post<any>(
+      `${this.baseUrl}/enregistrer`,
+      formData,
+      {
+        reportProgress: true,
+        observe: 'events'
+      });
+  }
 
-    formData.append('file', file);
-
-    const req = new HttpRequest('POST', `${this.baseUrl}/upload`, formData, {
-      reportProgress: true,
-      responseType: 'json'
-    });
-    return this.http.request(req);
+  // Fetches the names of files to be displayed in the downloads list.
+  fetchFileNames(typefichier: string): Observable<string[]> {
+    return this.http
+      .get<string[]>(`${this.baseUrl}/listFichiers/${typefichier}`)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
   }
 
   getDonnee(filename: string): Observable<__StrictHttpResponse<DonneeDto>> {
@@ -129,6 +141,15 @@ export class DonneeService extends __BaseService {
   delete(id) {
     return this.http
       .delete<DonneeDto>(this.donneeUrl + '/supprimer/' + id, this.httpOptions)
+      .pipe(
+        retry(2),
+        catchError(this.handleError)
+      )
+  }
+
+  supprimer(nom, type) {
+    return this.http
+      .delete<string>(this.baseUrl + '/supprimer/' + nom + "/" + type, this.httpOptions)
       .pipe(
         retry(2),
         catchError(this.handleError)

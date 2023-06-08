@@ -12,8 +12,7 @@ import {CarouselConfig} from "ngx-bootstrap/carousel";
     { provide: CarouselConfig, useValue: { interval: 1500, noPause: false, showIndicators: true } }
   ],
   styleUrls: [
-     "./galerie.component.scss",
-     "./adminlte.css"
+     "./galerie.component.scss"
   ],
 })
 export class GalerieComponent implements OnInit {

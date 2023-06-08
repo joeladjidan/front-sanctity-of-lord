@@ -1,4 +1,80 @@
 <c-row ngPreserveWhitespaces>
+  <c-accordion [alwaysOpen]="true">
+    <c-accordion-item #item0="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+          <strong>Liste des fichiers audio pour les emissions et témoignages</strong>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+
+
+        </div>
+      </ng-template>
+    </c-accordion-item>
+
+    <c-accordion-item #item1="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item1.toggleItem()" [collapsed]="!item1.visible" cAccordionButton>
+          <strong>Liste des photos contenue dans la galérie</strong>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+
+        </div>
+      </ng-template>
+    </c-accordion-item>
+  </c-accordion>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <form [formGroup]="donneeForm " (ngSubmit)="onSubmit()">
   <c-col [sm]="12">
     <c-card class="mb-4">
@@ -389,11 +465,11 @@
         <div class="center">
           <button cButton
                   (click)="onReset()"
-                  class="bold">Annuler
+                  class="bold btn-radius">Annuler
           </button>
           &nbsp;&nbsp;&nbsp;
           <button cButton (click)="onSubmit()"
-                  class="bold">
+                  class="bold btn-radius">
             Enregistrer
           </button>
         </div>

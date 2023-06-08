@@ -4,3 +4,4 @@ export { ChangerMotDePasseUtilisateurDto } from '../app/models/changer-mot-de-pa
 export { EntrepriseDto } from '../app/models/entreprise-dto';
 export { RolesDto } from '../app/models/roles-dto';
 export { UtilisateurDto } from '../app/models/utilisateur-dto';
+export { DonneeDto } from '../app/models/donnee-dto';

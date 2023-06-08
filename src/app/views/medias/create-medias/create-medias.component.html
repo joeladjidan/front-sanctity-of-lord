@@ -1,113 +1,163 @@
 <c-row ngPreserveWhitespaces>
-  <form [formGroup]="formData" (ngSubmit)="onSubmit()">
-    <c-col [sm]="12">
-      <c-card class="mb-4">
-        <c-card-header>
-          <strong>Ajouter des fichiers pour galerie photo</strong>
-        </c-card-header>
-        <c-card-body>
 
-        </c-card-body>
-      </c-card>
-    </c-col>
+  <c-accordion [alwaysOpen]="true">
+    <c-accordion-item #item0="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
+          <strong>Ajout des fichiers audio pour les emissions et témoignages</strong>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          <form [formGroup]="mediaForm" (ngSubmit)="onSubmit()">
+            <c-col [sm]="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <div class="container" >
+                    <div fxFlex="25%">
 
-    <!--https://turreta.com/2018/05/20/spring-boot-upload-multiple-files-from-angular/-->
+                      <mat-card-header>
+                        <mat-card-subtitle>
+                          <span *ngIf="selectedFiles !== undefined">{{selectedFiles.length}} fichier(s) selectionné(s)</span>
+                        </mat-card-subtitle>
+                        <mat-card-subtitle>
 
+                          <input cFormControl
+                                 type="file"
+                                 #fileInput
+                                 class="form-control"
+                                 (change)="selectFile($event)"
+                                 ngModel multiple
+                          />
+                          <!--  <mat-form-field class="example-full-width" (click)="fileInput.click()">
+                              <input matInput placeholder="Choisir plusieurs fichiers"
+                                     value="{{fileInput.value.substr(fileInput.value.lastIndexOf('\\')+1)}}">
+                              <mat-icon matSuffix>folder_open</mat-icon>
+                            </mat-form-field>-->
+                        </mat-card-subtitle>
+                      </mat-card-header>
 
-    <c-col [sm]="12">
-      <c-card class="mb-4">
-        <c-card-header>
-          <strong>Ajouter des fichiers audio pour les emissions et témoignages</strong>
-        </c-card-header>
-        <c-card-body>
+                    </div>
+                    <div fxFlex="25%">
+                      <mat-card>
+                        <mat-card-header>
+                          <mat-card-title *ngIf="!showProgress">Aucun fichier en cours de chargement!</mat-card-title>
+                          <mat-card-title *ngIf="showProgress">Fichiers</mat-card-title>
+                          <mat-card-subtitle *ngFor="let uploadedFile of uploadedFiles">
+                            <mat-icon>insert_drive_file</mat-icon>
+                            {{uploadedFile.name}} - {{uploadedFile.progress}}%
+                            <mat-progress-bar mode="determinate" value="{{uploadedFile.progress}}"></mat-progress-bar>
+                          </mat-card-subtitle>
+                        </mat-card-header>
+                      </mat-card>
+                    </div>
+                  </div>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </form>
 
-          <div class="fb-share-button"
-               data-href="https://developers.facebook.com/docs/plugins/"
-               data-layout=""
-               data-size="">
-            <a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">
-              Partager
-            </a>
-          </div>
-
-          <div fxLayoutWrap fxLayout="row" fxLayoutAlign="center">
-            <div fxFlex="100" fxFlex.gt-sm="50" fxFlex.sm="60" class="flex-p">
-
-              <span style="height: 200px; width:300px; border-radius: 20px">
-                 <input type="file"
-                        id="file[0]"
-                        (change)="handleFileInput1($event)"/>
-                <img [src]="imageSrc1" *ngIf="imageSrc1" style="height: 200px; width:300px; border-radius: 20px">
-              </span>
-              <span style="height: 200px; width:300px; border-radius: 20px">
-                <input type="file"
-                       id="file[1]"
-                       (change)="handleFileInput2($event)"/>
-                <img [src]="imageSrc2" *ngIf="imageSrc2" style="height: 200px; width:300px; border-radius: 20px">
-              </span>
-            </div>
-          </div>
-
-
-
-
-
-
-
-         <!-- <c-row class="mb-3">
-             <label cLabel="col" cCol [sm]="2">
-               <b>Fichier</b>
-               <span class="text-danger"
-                     *ngIf="fichierForm.get('fileSource1').errors && fichierForm.get('fileSource1').hasError('required')">*
-               </span>
-             </label>
-
-             <c-col [sm]="4">
-               <input cFormControl
-                      type="file"
-                      class="form-control"
-                      formControlName="fileSource1"
-                      [class.valid]="fichierForm.get('fileSource1').valid &&
-                       (fichierForm.get('fileSource1').dirty || fichierForm.get('fileSource1').touched)"
-                      [class.invalid]="fichierForm.get('fileSource1').invalid &&
-                       (fichierForm.get('fileSource1').dirty || fichierForm.get('fileSource1').touched)"
-                      (change)="onFileChange($event)"
-                />
-               <img [src]="imageSrc" *ngIf="imageSrc" style="height: 200px; width:300px; border-radius: 20px">
-
-               <div *ngIf="fichierForm.get('fileSource1').invalid && fichierForm.get('fileSource1').errors && (fichierForm.get('fileSource1').dirty
-                      || fichierForm.get('fileSource1').touched)">
-                 <small class="text-danger"
-                        *ngIf="fichierForm.get('fileSource1').hasError('required')">
-                   Le fichier est obligatoire.
-                 </small>
-               </div>
-             </c-col>
-           </c-row>-->
-
-        </c-card-body>
-      </c-card>
-    </c-col>
-  </form>
-
-  <br>
-  <c-col [sm]="12">
-    <c-card class="mb-6">
-      <c-card-body>
-        <div class="center">
-          <button cButton
-                  (click)="onReset()"
-                  class="bold">Annuler
-          </button>
-          &nbsp;&nbsp;&nbsp;
-          <button cButton (click)="onSubmit()"
-                  class="bold">
-            Enregistrer
-          </button>
+          <br>
+          <c-col [sm]="12">
+            <c-card class="mb-6">
+              <c-card-body>
+                <div class="center">
+                  <button cButton
+                          (click)="onReset()"
+                          class="bold btn">Annuler
+                  </button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button cButton (click)="AjouterAudios()"
+                          class="bold btn">
+                    Enregistrer
+                  </button>
+                </div>
+              </c-card-body>
+            </c-card>
+          </c-col>
         </div>
-      </c-card-body>
-    </c-card>
-  </c-col>
+      </ng-template>
+    </c-accordion-item>
+
+    <c-accordion-item #item1="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item1.toggleItem()" [collapsed]="!item1.visible" cAccordionButton>
+          <strong>Ajout des photos pour la galérie</strong>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          <form [formGroup]="mediaForm" (ngSubmit)="onSubmit()">
+            <c-col [sm]="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <div class="container" >
+                    <div fxFlex="25%">
+
+                      <mat-card-header>
+                        <mat-card-subtitle>
+                          <span *ngIf="selectedFiles !== undefined">{{selectedFiles.length}} fichier(s) selectionné(s)</span>
+                        </mat-card-subtitle>
+                        <mat-card-subtitle>
+
+
+                          <input cFormControl
+                                 type="file"
+                                 #fileInput
+                                 class="form-control"
+                                 (change)="selectFile($event)"
+                                 ngModel multiple
+                          />
+                          <!--  <mat-form-field class="example-full-width" (click)="fileInput.click()">
+                              <input matInput placeholder="Choisir plusieurs fichiers"
+                                     value="{{fileInput.value.substr(fileInput.value.lastIndexOf('\\')+1)}}">
+                              <mat-icon matSuffix>folder_open</mat-icon>
+                            </mat-form-field>-->
+                        </mat-card-subtitle>
+                      </mat-card-header>
+
+                    </div>
+                    <div fxFlex="25%">
+                      <mat-card>
+                        <mat-card-header>
+                          <mat-card-title *ngIf="!showProgress">Aucun fichier en cours de chargement!</mat-card-title>
+                          <mat-card-title *ngIf="showProgress">Fichiers</mat-card-title>
+                          <mat-card-subtitle *ngFor="let uploadedFile of uploadedFiles">
+                            <mat-icon>insert_drive_file</mat-icon>
+                            {{uploadedFile.name}} - {{uploadedFile.progress}}%
+                            <mat-progress-bar mode="determinate" value="{{uploadedFile.progress}}"></mat-progress-bar>
+                          </mat-card-subtitle>
+                        </mat-card-header>
+                      </mat-card>
+                    </div>
+                  </div>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </form>
+
+          <br>
+          <c-col [sm]="12">
+            <c-card class="mb-6">
+              <c-card-body>
+                <div class="center">
+                  <button cButton
+                          (click)="onReset()"
+                          class="bold btn">Annuler
+                  </button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button cButton (click)="AjouterPhotos()"
+                          class="bold btn">
+                    Enregistrer
+                  </button>
+                </div>
+              </c-card-body>
+            </c-card>
+          </c-col>
+        </div>
+      </ng-template>
+    </c-accordion-item>
+  </c-accordion>
 </c-row>
 
 
