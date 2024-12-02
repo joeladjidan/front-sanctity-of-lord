@@ -20,6 +20,7 @@ import {CreateFichierComponent} from "./create-fichier/create-fichier.component"
 import {ListFichierComponent} from "./list-fichier/list-fichier.component";
 import {ViewFichierComponent} from "./view-fichier/view-fichier.component";
 import {ImageCropperModule} from "ngx-image-cropper";
+import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {ImageCropperModule} from "ngx-image-cropper";
     DropdownModule,
     ListGroupModule,
     FichierRoutingModule,
-    ImageCropperModule
+    ImageCropperModule,
+    NgbModule
   ]
 })
 export class FichierModule { }

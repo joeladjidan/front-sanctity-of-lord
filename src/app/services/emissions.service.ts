@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {BaseService as __BaseService} from "../../components/base-service";
 import {ApiConfiguration as __Configuration} from "../api-configuration";
 import {HttpClient, HttpErrorResponse, HttpHeaders, HttpRequest, HttpResponse} from "@angular/common/http";
 import {StrictHttpResponse as __StrictHttpResponse} from "../../components/strict-http-response";
 import {catchError, filter as __filter, map as __map, retry} from 'rxjs/operators';
-import {Observable , throwError} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {EmissionDto} from "../models/emission-dto";
 
 @Injectable({
@@ -16,7 +16,8 @@ export class EmissionsService extends __BaseService {
   // Http Options
   httpOptions = {
     headers: new HttpHeaders({
-      'Content-Type': 'application/json'
+      'Accept': 'application/json',
+      'Content-Type': 'application/json; charset=utf-8'
     })
   }
 

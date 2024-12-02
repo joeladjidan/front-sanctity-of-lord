@@ -1,9 +1,9 @@
-import { NgModule } from '@angular/core';
-import { DefaultLayoutComponent } from './containers';
-import { Page404Component } from './views/pages/page404/page404.component';
-import { Page500Component } from './views/pages/page500/page500.component';
-import { LoginComponent } from './views/pages/login/login.component';
-import { RegisterComponent } from './views/pages/register/register.component';
+import {NgModule} from '@angular/core';
+import {DefaultLayoutComponent} from './containers';
+import {Page404Component} from './views/pages/page404/page404.component';
+import {Page500Component} from './views/pages/page500/page500.component';
+import {LoginComponent} from './views/pages/login/login.component';
+import {RegisterComponent} from './views/pages/register/register.component';
 import {Page401Component} from "./views/pages/page401/page401.component";
 import {RouterModule, Routes} from "@angular/router";
 
@@ -80,6 +80,13 @@ const routes: Routes = [
           title: 'Pour tous besoin d\'assistance'
         },
         loadChildren: () => import('./views/assistance/assistance.module').then((m) => m.AssistanceModule)
+      },
+      {
+        path: 'confidentialite',
+        data: {
+          title: 'Politique de confidentialité'
+        },
+        loadChildren: () => import('./views/confidentialite/confidentialite.module').then((m) => m.ConfidentialiteModule)
       },
       {
         path: 'contact',

@@ -1,14 +1,9 @@
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor, HttpHeaders, HttpResponse
-} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable, throwError} from 'rxjs';
+import {HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Router} from "@angular/router";
 import {AuthenticationResponse} from "../models/authentication-response";
-import {tap} from "rxjs/operators";
+import {catchError} from "rxjs/operators";
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +19,7 @@ export class HttpInterceptorService implements HttpInterceptor {
     let authenticationResponse: AuthenticationResponse = {};
     if (localStorage.getItem('accessToken')) {
       authenticationResponse = JSON.parse(
-        localStorage.getItem('accessToken') as string
+        localStorage.getItem('accessToken') as string,
       );
       const authReq = req.clone({
         headers: new HttpHeaders({
@@ -36,34 +31,34 @@ export class HttpInterceptorService implements HttpInterceptor {
     return this.handleRequest(req, next);
   }
 
-  handleRequest(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    return next.handle(req)
-      .pipe(tap((event: HttpEvent<any>) => {
-        if (event instanceof HttpResponse) {
 
-        }
-      }, (err: any) => {
-        console.log(err);
-        return this.router.navigate(['401']);
-        if (err.status === 401) {
-          debugger;
-          if (err.error.message === 'Token is expire') {
-            const params = {
-              token: this.token,
-              refreshToken: localStorage.getItem('refreshToken')  as string
-            };
-            return this.http.post('localhost:8080/auth/refresh', params).flatMap(
-              (data: any) => {
-
+  handleRequest(request: HttpRequest<any>, next: HttpHandler):
+    Observable<HttpEvent<any>> {
+        return next.handle(request).pipe(
+          catchError((error) => {
+            if (error.status === 401) {
+              // Token expired, redirect to login page
+              let authenticationResponse: AuthenticationResponse = {};
+              if (localStorage.getItem('refreshToken')) {
+                authenticationResponse = JSON.parse(
+                  localStorage.getItem('refreshToken') as string,
+                );
+                const authReq = request.clone({
+                  headers: new HttpHeaders({
+                    Authorization: 'Bearer ' + authenticationResponse
+                  })
+                });
+                return this.handleRequest(authReq, next);
               }
-            );
-          }
-        }
-        if (err.status === 403) {
-          return this.router.navigate(['login']);
-        }
-      }));
-  }
+           //   this.router.navigate(['/login']);
+            }
+            if (error.status === 400) {
+              // Token expired, redirect to login page
+              this.router.navigate(['/login']);
+            }
+            return throwError(error);
+          }));
+    }
 }
 
 

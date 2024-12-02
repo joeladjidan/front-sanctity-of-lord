@@ -5,9 +5,8 @@ import {DonneeDto} from "./donnee-dto";
 
 export interface EmissionDto {
   id?: number;
-  intitule?: string;
   description?: string;
-  dateEmission?: string;
+  dateEmission?: Date;
   donnee?: DonneeDto;
   typeEmission?: TypeEmissionDto;
 }

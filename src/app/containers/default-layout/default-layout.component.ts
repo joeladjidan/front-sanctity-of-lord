@@ -58,7 +58,7 @@ export class DefaultLayoutComponent implements OnInit {
                 name: 'Personne à contacter',
                 url: '/contact/list',
                 iconComponent: { name: 'cilPhone' }
-              },
+              }
             ]
         });
       }
@@ -98,22 +98,22 @@ export class DefaultLayoutComponent implements OnInit {
           url: '/contact',
           iconComponent: { name: 'cilPhone' }
         },
-        {
-          name: 'Assistance',
-          url: '/assistance',
-          iconComponent: { name: 'cilSettings' }
-        },
-        /* {
-           name: 'Theme',
-           url: '/theme/colors',
-           iconComponent: { name: 'cil-drop' }
-         },
+        /*  {
+           name: 'Assistance',
+           url: '/assistance',
+           iconComponent: { name: 'cilSettings' }
+         }
          {
-           name: 'Typography',
-           url: '/theme/typography',
-           linkProps: { fragment: 'someAnchor' },
-           iconComponent: { name: 'cil-pencil' }
-         },*/
+            name: 'Theme',
+            url: '/theme/colors',
+            iconComponent: { name: 'cil-drop' }
+          },
+          {
+            name: 'Typography',
+            url: '/theme/typography',
+            linkProps: { fragment: 'someAnchor' },
+            iconComponent: { name: 'cil-pencil' }
+          },*/
 
         /*{
           name: 'Components',

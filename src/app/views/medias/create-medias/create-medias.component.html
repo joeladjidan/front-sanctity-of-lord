@@ -1,6 +1,5 @@
 <c-row ngPreserveWhitespaces>
-
-  <c-accordion [alwaysOpen]="true">
+  <c-accordion [alwaysOpen]="false">
     <c-accordion-item #item0="cAccordionItem" [visible]="false">
       <ng-template cTemplateId="accordionHeaderTemplate">
         <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
@@ -67,7 +66,7 @@
                           class="bold btn">Annuler
                   </button>
                   &nbsp;&nbsp;&nbsp;
-                  <button cButton (click)="AjouterAudios()"
+                  <button cButton (click)="ajouterAudios()"
                           class="bold btn">
                     Enregistrer
                   </button>
@@ -87,7 +86,7 @@
       </ng-template>
       <ng-template cTemplateId="accordionBodyTemplate">
         <div class="accordion-body">
-          <form [formGroup]="mediaForm" (ngSubmit)="onSubmit()">
+          <form [formGroup]="mediaForm">
             <c-col [sm]="12">
               <c-card class="mb-4">
                 <c-card-body>
@@ -146,7 +145,7 @@
                           class="bold btn">Annuler
                   </button>
                   &nbsp;&nbsp;&nbsp;
-                  <button cButton (click)="AjouterPhotos()"
+                  <button cButton (click)="ajouterPhotos()"
                           class="bold btn">
                     Enregistrer
                   </button>

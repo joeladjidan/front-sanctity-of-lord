@@ -1,7 +1,15 @@
-import {AfterContentInit, AfterViewInit, Component, ElementRef, OnInit, ViewChild,} from '@angular/core';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  Component,
+  ElementRef,
+  Inject,
+  LOCALE_ID,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {Observable} from 'rxjs';
 import Swal from 'sweetalert2';
 import {DonneeDto} from "../../../models/donnee-dto";
 import {UtilisateursService} from "../../../services/utilisateurs.service";
@@ -20,6 +28,7 @@ import {GalerieDto} from "../../../models/galerie-dto";
 import {EmissionDto} from "../../../models/emission-dto";
 import {parseDate} from "ngx-bootstrap/chronos";
 import {MatAccordion} from "@angular/material/expansion";
+import {formatDate} from '@angular/common';
 
 @Component({
   selector: 'app-create-fichier',
@@ -28,9 +37,11 @@ import {MatAccordion} from "@angular/material/expansion";
 })
 export class CreateFichierComponent implements OnInit, AfterContentInit , AfterViewInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
-
   @ViewChild('dateFihier') myInputElementRef: ElementRef;
 
+  emissionForm: FormGroup;
+  galerieForm: FormGroup;
+  enseignementForm: FormGroup;
   donneeForm: FormGroup = new FormGroup({
     url: new FormControl(''),
     dateFichier: new FormControl('', Validators.required),
@@ -49,10 +60,6 @@ export class CreateFichierComponent implements OnInit, AfterContentInit , AfterV
     descriptionEmission: new FormControl('', Validators.required),
   });
 
-  submitted = false;
-  isArchive = false;
-  isEmission = false;
-  isGalerie = false;
   donneeDto: DonneeDto;
   isEnseignement = false;
   loggedIn: boolean;
@@ -74,6 +81,7 @@ export class CreateFichierComponent implements OnInit, AfterContentInit , AfterV
     private galerieService: GalerieService,
     private emissionService: EmissionsService,
     private enseignementService: EnseignementsService,
+    @Inject(LOCALE_ID) private locale: string,
     private typeEnseignementService: TypeEnseignementService,
   ) {
     this.loggedIn = this.utilisateurService.loggedIn.getValue();
@@ -81,238 +89,11 @@ export class CreateFichierComponent implements OnInit, AfterContentInit , AfterV
 
   ngOnInit(): void {}
 
-
-  get typeEmission() {
-    return this.donneeForm.get('typeEmission');
-  }
-
-  get typeDonnee() {
-    return this.donneeForm.get('typeDonnee');
-  }
-
-  get titreMessage() {
-    return this.donneeForm.get('titreMessage');
-  }
-
-  get typeEnseignement() {
-    return this.donneeForm.get('typeEnseignement');
-  }
-
-  get f(){
-    return this.donneeForm.controls;
-  }
-
   onReset() {
-    this.donneeForm.reset() ;
+    this.emissionForm.reset();
+    this.galerieForm.reset();
+    this.enseignementForm.reset();
     this.router.navigateByUrl('fichier/list-fichier');
-  }
-
-  onSubmit() {
-    this.submitted = true;
-
-    console.log(this.donneeForm.value)
-
-    if (this.isEnseignement)
-    {
-      this.donneeForm.get('intitule').clearValidators();
-      this.donneeForm.get('intitule').updateValueAndValidity();
-
-      this.donneeForm.get('descriptionEmission').clearValidators();
-      this.donneeForm.get('descriptionEmission').updateValueAndValidity();
-    }
-
-    if (this.isGalerie)
-    {
-      this.donneeForm.get('url').setValue("http://anagkazo.net/galerie/"),
-      this.donneeForm.get('description').clearValidators();
-      this.donneeForm.get('description').updateValueAndValidity();
-
-      this.donneeForm.get('typeEmission').clearValidators();
-      this.donneeForm.get('typeEmission').updateValueAndValidity();
-
-      this.donneeForm.get('titreMessage').clearValidators();
-      this.donneeForm.get('titreMessage').updateValueAndValidity();
-
-      this.donneeForm.get('typeEnseignement').clearValidators();
-      this.donneeForm.get('typeEnseignement').updateValueAndValidity();
-
-      this.donneeForm.get('descriptionEmission').clearValidators();
-      this.donneeForm.get('descriptionEmission').updateValueAndValidity();
-    }
-
-    if (this.isEmission)
-    {
-      this.donneeForm.get('url').setValue("http://anagkazo.net/audio/"),
-      this.donneeForm.get('description').clearValidators();
-      this.donneeForm.get('description').updateValueAndValidity();
-
-      this.donneeForm.get('typeEmission').clearValidators();
-      this.donneeForm.get('typeEmission').updateValueAndValidity();
-
-      this.donneeForm.get('titreMessage').clearValidators();
-      this.donneeForm.get('titreMessage').updateValueAndValidity();
-
-      this.donneeForm.get('typeEnseignement').clearValidators();
-      this.donneeForm.get('typeEnseignement').updateValueAndValidity();
-
-      this.donneeForm.get('intitule').clearValidators();
-      this.donneeForm.get('intitule').updateValueAndValidity();
-    }
-    // stop here if form is invalid
-    if (this.donneeForm.invalid) {
-        Swal.fire({
-          icon: 'warning',
-          title: 'Attention !',
-          showConfirmButton: false,
-          html: 'Veillez renseigner tout les champs obligatoires',
-          timer: 5000
-        })
-        return;
-    }
-
-    this.donneeDto = {
-      url: this.donneeForm.get('url')?.value,
-      format: this.donneeForm.get('format')?.value,
-      date: parseDate(this.donneeForm.get('dateFichier')?.value),
-      fileName: this.donneeForm.get('fileName')?.value
-    }
-
-    this.enseignementDto = {
-      donnee: null,
-      description: this.donneeForm.get('description') ?.value,
-      titreMessage: this.listTitreMessage.filter(titreMessage => titreMessage.id === parseInt(this.titreMessage?.value))[0],
-      typeEmission: this.listTypeEmission.filter(typeEmission => typeEmission.id === parseInt(this.typeEmission ?.value))[0],
-      typeEnseignement: this.listTypeEnseignement.filter(typeEnseignement => typeEnseignement.id === parseInt(this.typeEnseignement ?.value))[0]
-    }
-
-    this.emissionDto = {
-      donnee: null,
-    }
-
-    this.galerieDto = {
-      donnee: null,
-      intitule: this.donneeForm.get('intitule') ?.value
-    }
-
-    this.donneeService.enregistrer(this.donneeDto)
-        .subscribe((donnee) => {
-          if (donnee != null ) {
-              this.insertionGalerie(donnee);
-              this.insertionEmission(donnee);
-              this.insertionEnseignement(donnee);
-              Swal.fire("Enregistrement", 'La donnée a eté enregistré avec succès', 'success');
-          }
-          this.router.navigateByUrl('fichier/list-fichier');
-      }, error => {
-          Swal.fire("Echec !", 'Lors de la créaction des données', 'error');
-          this.router.navigate(['401']);
-    });
-  }
-
-
-  insertionEnseignement(donnee: DonneeDto):  void {
-  if (this.isEnseignement)
-    {
-      this.enseignementDto.donnee = donnee;
-      this.enseignementService.enregistrer(this.enseignementDto).subscribe((enseignement) => {
-      if (enseignement != null)
-        {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Enrégistrement',
-            showConfirmButton: false,
-            html: 'Insertion de l\'enseignement effectué avec success',
-            timer: 1500,
-          })
-        }
-      });
-    }
-  }
-
-  insertionGalerie(donnee: DonneeDto):  void {
-    if (this.isGalerie)
-    {
-      this.galerieDto.donnee = donnee;
-      this.galerieService.enregistrer(this.galerieDto).subscribe((galerie) => {
-        if (galerie != null)
-        {
-
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Enrégistrement',
-            showConfirmButton: false,
-            html: 'Insertion de l\'enseignement effectué avec success',
-            timer: 1500,
-          })
-        }
-      });
-    }
-  }
-
-
-  insertionEmission(donnee: DonneeDto):  void {
-    if (this.isEmission)
-    {
-      this.emissionDto.donnee = donnee;
-      this.emissionService.enregistrer(this.emissionDto).subscribe((emission) => {
-        if (emission != null)
-        {
-          Swal.fire({
-            position: 'top-end',
-            icon: 'success',
-            title: 'Enrégistrement',
-            showConfirmButton: false,
-            html: 'Insertion de l\'enseignement effectué avec success',
-            timer: 1500,
-          })
-        }
-      });
-    }
-  }
-
-  changeTypeEmission(e: any): void {
-    this.typeEmission?.setValue(e.target.value, {
-      onlySelf: true,
-    });
-  }
-
-  changeTypeDonne(event: any): void {
-    this.typeDonnee?.setValue(event.target.value, {
-      onlySelf: true,
-    });
-
-    if (event.target.value === "1") {
-      this.isArchive = false;
-      this.isEmission = false;
-      this.isGalerie = false;
-      this.isEnseignement = true;
-    }
-    if (event.target.value  === "2") {
-      this.isArchive = false;
-      this.isEmission = true;
-      this.isGalerie = false;
-      this.isEnseignement = false;
-    }
-    if (event.target.value  === "3") {
-      this.isArchive = false;
-      this.isEmission = false;
-      this.isGalerie = true;
-      this.isEnseignement = false;
-    }
-    if (event.target.value === "4") {
-      this.isArchive = true;
-      this.isEmission = false;
-      this.isGalerie = false;
-      this.isEnseignement = false;
-    }
-    if (event.target.value === "") {
-      this.isArchive = false;
-      this.isEmission = false;
-      this.isGalerie = false;
-      this.isEnseignement = false;
-    }
   }
 
   getListTypeEmission(): void {
@@ -336,35 +117,242 @@ export class CreateFichierComponent implements OnInit, AfterContentInit , AfterV
     });
   }
 
-  ngAfterContentInit(): void {
+  ngAfterContentInit(): void
+  {
     this.getListTypeMessage();
     this.getListTypeEmission();
     this.getListTypeEnseignement();
     this.loggedIn = this.utilisateurService.loggedIn.getValue();
-    this.donneeForm = this.formBuilder.group(
+
+    this.emissionForm = this.formBuilder.group(
       {
-        url: new FormControl( 'http://anagkazo.net/',[
+        url: new FormControl( 'http://anagkazo.net/audio/',[
           Validators.required
         ]),
-        dateFichier: new FormControl('', Validators.required),
-        intitule: new FormControl('', Validators.required),
+        dateFichier: new FormControl(formatDate(new Date(),'dd/MM/yyyy',this.locale), Validators.required),
+        format: new FormControl('mp3', Validators.required),
+        typeEmission: new FormControl('', Validators.required),
+        description: new FormControl('', Validators.required),
+        fileName: new FormControl('', Validators.compose([
+          Validators.maxLength(25),
+          Validators.minLength(5),
+          Validators.required
+        ]))
+      }
+    );
+
+    this.enseignementForm = this.formBuilder.group(
+      {
+        url: new FormControl( '',[
+          Validators.required
+        ]),
+        dateFichier: new FormControl(formatDate(new Date(),'dd/MM/yyyy',this.locale), Validators.required),
+        format: new FormControl('mp4', Validators.required),
+        typeEmission: new FormControl('3', Validators.required),
+        description: new FormControl('', Validators.required),
+        titreMessage: new FormControl('', Validators.required),
+        typeEnseignement: new FormControl('', Validators.required),
+        fileName: new FormControl('YOUTUBE', Validators.compose([
+          Validators.maxLength(25),
+          Validators.minLength(5),
+          Validators.required
+        ]))
+      }
+    );
+
+    this.galerieForm = this.formBuilder.group(
+      {
+        url: new FormControl( 'http://anagkazo.net/galerie/',[
+          Validators.required
+        ]),
+        dateFichier: new FormControl(formatDate(new Date(),'dd/MM/yyyy',this.locale), Validators.required),
         format: new FormControl('', Validators.required),
-        typeDonnee: new FormControl('', Validators.required),
+        intitule: new FormControl('', Validators.required),
         fileName: new FormControl('', Validators.compose([
           Validators.maxLength(25),
           Validators.minLength(5),
           Validators.required
         ])),
-        description: new FormControl('', Validators.required),
-        typeEmission: new FormControl('', Validators.required),
-        typeEnseignement: new FormControl('', Validators.required),
-        titreMessage: new FormControl('', Validators.required),
-        descriptionEmission: new FormControl('', Validators.required),
       }
     );
-  }
+}
 
   ngAfterViewInit(): void {
-
+    this.loggedIn = this.utilisateurService.loggedIn.getValue();
   }
+
+  onSubmitGalerie() {
+
+    // stop here if form is invalid
+    if (this.galerieForm.invalid) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention !',
+        showConfirmButton: false,
+        html: 'Veillez renseigner tout les champs obligatoires',
+        timer: 5000
+      })
+      return;
+    }
+
+    this.donneeDto = {
+      url: this.galerieForm.get('url')?.value + this.galerieForm.get('fileName')?.value + "." + this.galerieForm.get('format')?.value,
+      format: this.galerieForm.get('format')?.value,
+      fileName: this.galerieForm.get('fileName')?.value,
+      date: parseDate(this.galerieForm.get('dateFichier')?.value),
+    }
+
+    this.donneeService.enregistrer(this.donneeDto)
+      .subscribe((donnee) => {
+        if (donnee != null ) {
+          this.insertionGalerie(donnee);
+        }
+        this.router.navigateByUrl('fichier/list-fichier');
+      }, error => {
+        Swal.fire("Echec !", 'Lors de la créaction des données', 'error');
+        this.router.navigate(['401']);
+      });
+  }
+
+  onSubmitEnseignement() {
+
+    console.log(this.enseignementForm.value)
+
+    // stop here if form is invalid
+    if (this.enseignementForm.invalid) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention !',
+        showConfirmButton: false,
+        html: 'Veillez renseigner tout les champs obligatoires',
+        timer: 5000
+      })
+      return;
+    }
+
+    this.donneeDto = {
+      url: this.enseignementForm.get('url')?.value,
+      format: this.enseignementForm.get('format')?.value,
+      fileName: this.enseignementForm.get('fileName')?.value,
+      date: parseDate(this.enseignementForm.get('dateFichier')?.value),
+    }
+
+    this.donneeService.enregistrer(this.donneeDto)
+      .subscribe((donnee) => {
+        if (donnee != null ) {
+           this.insertionEnseignement(donnee);
+        }
+        this.router.navigateByUrl('fichier/list-fichier');
+      }, error => {
+        Swal.fire("Echec !", 'Lors de la créaction des données', 'error');
+        this.router.navigate(['401']);
+      });
+  }
+
+  onSubmitEmission() {
+
+    console.log(this.emissionForm.value)
+
+    // stop here if form is invalid
+    if (this.emissionForm.invalid) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Attention !',
+        showConfirmButton: false,
+        html: 'Veillez renseigner tout les champs obligatoires',
+        timer: 5000
+      })
+      return;
+    }
+
+    this.donneeDto = {
+      url: this.emissionForm.get('url')?.value + this.emissionForm.get('fileName')?.value + "." + this.emissionForm.get('format')?.value,
+      format: this.emissionForm.get('format')?.value,
+      fileName: this.emissionForm.get('fileName')?.value,
+      date: parseDate(this.emissionForm.get('dateFichier')?.value),
+    }
+
+    this.donneeService.enregistrer(this.donneeDto)
+      .subscribe((donnee) => {
+        if (donnee != null ) {
+          this.insertionEmission(donnee);
+        //  Swal.fire("Enregistrement", 'La donnée a eté enregistré avec succès', 'success');
+        }
+        this.router.navigateByUrl('fichier/list-fichier');
+      }, error => {
+        Swal.fire("Echec !", 'Lors de la créaction des données', 'error');
+        this.router.navigate(['401']);
+      });
+  }
+
+  insertionEmission(donnee: DonneeDto):  void {
+    this.emissionDto = {
+      donnee: donnee,
+      description: this.emissionForm.get('description')?.value,
+      dateEmission: donnee.date,
+      typeEmission: this.listTypeEmission.filter(typeEmission => typeEmission.id === parseInt(this.emissionForm.get('typeEmission')?.value))[0]
+  }
+    console.log(this.emissionDto);
+    debugger
+    this.emissionService.enregistrer(this.emissionDto).subscribe((emission) => {
+      if (emission != null)
+      {
+        Swal.fire({
+          icon: 'success',
+          title: 'Enrégistrement',
+          showConfirmButton: false,
+          html: 'Insertion de l\'emission effectuée avec success',
+          timer: 1500,
+        })
+      }
+    }, error => {
+      Swal.fire("Echec !", 'Lors de la créaction des données', 'error');
+      this.router.navigate(['401']);
+    });
+  }
+
+  insertionEnseignement(donnee: DonneeDto):  void {
+    this.enseignementDto = {
+      donnee: donnee,
+      description: this.enseignementForm.get('description')?.value,
+      typeEmission: this.listTypeEmission.filter(typeEmission => typeEmission.id === parseInt(this.enseignementForm.get('typeEmission')?.value))[0],
+      titreMessage: this.listTitreMessage.filter(titreMessage => titreMessage.id === parseInt(this.enseignementForm.get('titreMessage')?.value))[0],
+      typeEnseignement: this.listTypeEnseignement.filter(typeEnseignement => typeEnseignement.id === parseInt(this.enseignementForm.get('typeEnseignement')?.value))[0]
+    }
+    this.enseignementService.enregistrer(this.enseignementDto).subscribe((enseignement) => {
+      if (enseignement != null)
+      {
+        Swal.fire({
+          icon: 'success',
+          title: 'Enrégistrement',
+          showConfirmButton: false,
+          html: 'Insertion de l\'enseignement effectué avec success',
+          timer: 1500,
+        })
+      }
+    }, error => {
+      Swal.fire("Echec !", 'Lors de la créaction des données', 'error');
+      this.router.navigate(['401']);
+    });
+  }
+
+  insertionGalerie(donnee: DonneeDto):  void {
+    this.galerieDto = {
+      donnee: donnee,
+      intitule: this.galerieForm.get('intitule')?.value
+    }
+    this.galerieService.enregistrer(this.galerieDto).subscribe((galerie) => {
+      if (galerie != null)
+      {
+        Swal.fire({
+          icon: 'success',
+          title: 'Enrégistrement',
+          showConfirmButton: false,
+          html: 'Insertion de la photo effectuée avec success',
+          timer: 1500,
+        })
+      }
+    });
+  }
+
 }

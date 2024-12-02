@@ -7,6 +7,7 @@ import {DonneeService} from "../../../services/donnee.service";
 import {tap} from "rxjs/operators";
 import {FichierDetails} from "../../../models/fichier-details";
 import {MatAccordion} from "@angular/material/expansion";
+import Swal from "sweetalert2";
 
 @Component({
   selector: 'app-create-medias',
@@ -54,7 +55,7 @@ export class CreateMediasComponent implements OnInit {
     this.selectedFiles = event.target.files;
   }
 
-  AjouterPhotos() {
+  ajouterPhotos() {
     this.showProgress = true;
     this.uploadedFiles = [];
     Array.from(this.selectedFiles).forEach(file => {
@@ -69,6 +70,13 @@ export class CreateMediasComponent implements OnInit {
           }
         })).subscribe(event => {
         if (event instanceof HttpResponse) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Enrégistrement',
+            showConfirmButton: false,
+            html: 'Insertion de l\'image effectuée avec success',
+            timer: 1500,
+          })
           if (this.selectedFiles.item(this.selectedFiles.length - 1) === file) {
             // Invokes fetchFileNames() when last file in the list is uploaded.
             this.donneeService.fetchFileNames("2");
@@ -78,7 +86,7 @@ export class CreateMediasComponent implements OnInit {
     });
   }
 
-  AjouterAudios() {
+  ajouterAudios() {
     this.showProgress = true;
     this.uploadedFiles = [];
     Array.from(this.selectedFiles).forEach(file => {
@@ -93,6 +101,13 @@ export class CreateMediasComponent implements OnInit {
           }
         })).subscribe(event => {
         if (event instanceof HttpResponse) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Enrégistrement',
+            showConfirmButton: false,
+            html: 'Insertion du fichier audio effectué avec success',
+            timer: 1500,
+          })
           if (this.selectedFiles.item(this.selectedFiles.length - 1) === file) {
             // Invokes fetchFileNames() when last file in the list is uploaded.
             this.donneeService.fetchFileNames("1");

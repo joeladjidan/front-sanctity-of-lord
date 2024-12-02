@@ -31,10 +31,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let post of listRepertoireAudio">
-                    <td>{{ post }}</td>
+                  <tr *ngFor="let audio of listRepertoireAudio">
+                    <td>{{ audio }}</td>
                     <td style="white-space: nowrap">
-                      <button type="button" (click)="supprimerAudio(post, '1')" class="text-blue">
+                      <button type="button" (click)="supprimerAudio(audio, '1')" class="text-blue">
                         <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
                       </button>
                     </td>
@@ -90,10 +90,10 @@
                   </tr>
                   </thead>
                   <tbody>
-                  <tr *ngFor="let post of listRepertoireGalerie">
-                    <td>{{ post }}</td>
+                  <tr *ngFor="let galerie of listRepertoireGalerie">
+                    <td>{{ galerie }}</td>
                     <td style="white-space: nowrap">
-                      <button type="button" (click)="supprimerGalerie(post, '2')" class="text-blue">
+                      <button type="button" (click)="supprimerGalerie(galerie, '2')" class="text-blue">
                         <i class="material-icons" data-toggle="tooltip" title="Supprimer">&#xE872;</i>
                       </button>
                     </td>

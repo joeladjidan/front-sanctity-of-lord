@@ -1,14 +1,192 @@
 <c-row ngPreserveWhitespaces>
-  <c-accordion [alwaysOpen]="true">
+  <c-accordion [alwaysOpen]="false">
     <c-accordion-item #item0="cAccordionItem" [visible]="false">
       <ng-template cTemplateId="accordionHeaderTemplate">
         <button (click)="item0.toggleItem()" [collapsed]="!item0.visible" cAccordionButton>
-          <strong>Liste des fichiers audio pour les emissions et témoignages</strong>
+          <strong>Ajouter une donnée dans les emissions (Audios)</strong>
         </button>
       </ng-template>
       <ng-template cTemplateId="accordionBodyTemplate">
         <div class="accordion-body">
+          <form [formGroup]="emissionForm">
+            <c-col [sm]="12">
+              <c-card class="mb-4">
+                <c-card-body>
 
+                  <c-row>
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Type d'émission</b>
+                      <span class="text-danger"
+                            *ngIf="emissionForm.get('typeEmission').errors && emissionForm.get('typeEmission').hasError('required')">*
+                      </span>
+                    </label>
+
+                    <c-col [sm]="4">
+                      <select cSelect
+                              formControlName="typeEmission"
+                              class="form-control">
+                            <option value="">Choisir le type d'émission</option>
+                            <option *ngFor="let typeEmission of listTypeEmission"
+                                [value]="typeEmission.id">
+                          {{typeEmission.intitule}}
+                        </option>
+                      </select>
+
+                      <div *ngIf="emissionForm.get('typeEmission').invalid && emissionForm.get('typeEmission').errors && (emissionForm.get('typeEmission').dirty
+                   || emissionForm.get('typeEmission').touched)">
+                        <small class="text-danger"
+                               *ngIf="emissionForm.get('typeEmission').hasError('required')">
+                          Le type d'émission est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <br>
+
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Date</b>
+                      <span class="text-danger"
+                            *ngIf="emissionForm.get('dateFichier').errors && emissionForm.get('dateFichier').hasError('required')">*
+                     </span>
+                    </label>
+                    <c-col [sm]="4">
+                    <input #dateFichier
+                      cFormControl
+                     type="text"
+                     formControlName="dateFichier"
+                     [class.valid]="emissionForm.get('dateFichier').valid &&
+                     (emissionForm.get('dateFichier').dirty || emissionForm.get('dateFichier').touched)"
+                     [class.invalid]="emissionForm.get('dateFichier').invalid &&
+                     (emissionForm.get('dateFichier').dirty || emissionForm.get('dateFichier').touched)">
+
+                      <div *ngIf="emissionForm.get('dateFichier').invalid && emissionForm.get('dateFichier').errors && (emissionForm.get('dateFichier').dirty
+                   || emissionForm.get('dateFichier').touched)">
+                        <small class="text-danger"
+                               *ngIf="emissionForm.get('dateFichier').hasError('required')">
+                          La date du fichier est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Nom du Fichier</b>
+                      <span class="text-danger"
+                            *ngIf="emissionForm.get('fileName').errors && emissionForm.get('fileName').hasError('required')">*
+                      </span>
+                    </label>
+                    <c-col [sm]="4">
+                      <input cFormControl
+                             type="text"
+                             class="form-control"
+                             formControlName="fileName"
+                             [class.valid]="emissionForm.get('fileName').valid &&
+                      (emissionForm.get('fileName').dirty || emissionForm.get('fileName').touched)"
+                             [class.invalid]="emissionForm.get('fileName').invalid &&
+                      (emissionForm.get('fileName').dirty || emissionForm.get('fileName').touched)" />
+
+                      <div *ngIf="emissionForm.get('fileName').invalid && emissionForm.get('fileName').errors && (emissionForm.get('fileName').dirty
+                   || emissionForm.get('fileName').touched)">
+                        <small class="text-danger"
+                               *ngIf="emissionForm.get('fileName').hasError('required')">
+                          Le nom du fichier est obligatoire.
+                        </small>
+                        <small class="text-danger"
+                               *ngIf="emissionForm.get('fileName').hasError('minlength')">
+                          Saisir un minimum de {{emissionForm.get('fileName').errors.minlength.requiredLength}} caractères.
+                        </small>
+                        <small class="text-danger"
+                               *ngIf="emissionForm.get('fileName').hasError('maxlength')">
+                          Saisir un maximum de {{emissionForm.get('fileName').errors.maxlength.requiredLength}} caractères.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Url</b>
+                      <span class="text-danger"
+                            *ngIf="emissionForm.get('url').errors && emissionForm.get('url').hasError('required')">*
+                       </span>
+                    </label>
+                    <c-col [sm]="4">
+                      <input cFormControl
+                             type="text"
+                             class="form-control"
+                             formControlName="url"
+                             readonly
+                             [class.valid]="emissionForm.get('url').valid &&
+                      (emissionForm.get('url').dirty || emissionForm.get('url').touched)"
+                             [class.invalid]="emissionForm.get('url').invalid &&
+                      (emissionForm.get('url').dirty || emissionForm.get('url').touched)"/>
+
+                      <div *ngIf="emissionForm.get('url').invalid && emissionForm.get('url').errors && (emissionForm.get('url').dirty
+                   || emissionForm.get('url').touched)">
+                        <small class="text-danger"
+                               *ngIf="donneeForm.get('url').hasError('required')">
+                          L'url du fichiér est obligatoire.
+                        </small>
+                        <!-- <small class="text-danger"
+                                *ngIf="donneeForm.get('url').hasError('pattern')">
+                           Saisir une adresse url valide.
+                         </small>-->
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                </c-card-body>
+              </c-card>
+            </c-col>
+
+            <c-col [sm]="12">
+              <c-card class="mb-4">
+                <c-card-header>
+                  <strong>Ajouter une emission</strong>
+                </c-card-header>
+                <c-card-body>
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Description</b>
+                      <span class="text-danger"
+                            *ngIf="emissionForm.get('description').errors && emissionForm.get('description').hasError('required')">*
+                     </span>
+                    </label>
+                    <c-col [sm]="8">
+                      <textarea cFormControl type="text"  class="form-control" formControlName="description" ></textarea>
+                      <div *ngIf="emissionForm.get('description').invalid && emissionForm.get('description').errors &&
+                  (emissionForm.get('description').dirty || emissionForm.get('description').touched)">
+                        <small class="text-danger" *ngIf="emissionForm.get('description').hasError('required')">
+                          La description de l'émission est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+                </c-card-body>
+              </c-card>
+            </c-col>
+          </form>
+          <br><br>
+          <c-col [sm]="12">
+            <c-card class="mb-6">
+              <c-card-body>
+                <div class="center">
+                  <button cButton
+                          (click)="onReset()"
+                          class="bold btn-radius">Annuler
+                  </button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button cButton (click)="onSubmitEmission()"
+                          class="bold btn-radius">
+                    Enregistrer
+                  </button>
+                </div>
+              </c-card-body>
+            </c-card>
+          </c-col>
 
         </div>
       </ng-template>
@@ -17,469 +195,389 @@
     <c-accordion-item #item1="cAccordionItem" [visible]="false">
       <ng-template cTemplateId="accordionHeaderTemplate">
         <button (click)="item1.toggleItem()" [collapsed]="!item1.visible" cAccordionButton>
-          <strong>Liste des photos contenue dans la galérie</strong>
+          <strong>Ajouter une donnée dans galérie (Photo)</strong>
         </button>
       </ng-template>
       <ng-template cTemplateId="accordionBodyTemplate">
         <div class="accordion-body">
+          <form [formGroup]="galerieForm">
+          <c-col [sm]="12">
+            <c-card class="mb-4">
+              <c-card-body>
+                <c-row class="mb-3">
+                  <label cLabel="col" cCol [sm]="2">
+                    <b>Date</b>
+                    <span class="text-danger"
+                          *ngIf="galerieForm.get('dateFichier').errors && galerieForm.get('dateFichier').hasError('required')">*
+                     </span>
+                  </label>
+                  <c-col [sm]="4">
+                    <input #dateFichier
+                           cFormControl
+                           type="text"
+                           formControlName="dateFichier"
+                           [class.valid]="galerieForm.get('dateFichier').valid &&
+                     (galerieForm.get('dateFichier').dirty || galerieForm.get('dateFichier').touched)"
+                           [class.invalid]="galerieForm.get('dateFichier').invalid &&
+                     (galerieForm.get('dateFichier').dirty || galerieForm.get('dateFichier').touched)">
+
+                    <div *ngIf="galerieForm.get('dateFichier').invalid && galerieForm.get('dateFichier').errors
+                      && (galerieForm.get('dateFichier').dirty
+                   || galerieForm.get('dateFichier').touched)">
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('dateFichier').hasError('required')">
+                        La date du fichier est obligatoire.
+                      </small>
+                    </div>
+                  </c-col>
+                </c-row>
+
+                <br>
+
+                <c-row class="mb-3">
+                  <label cLabel="col" cCol [sm]="2">
+                    <b>Nom du Fichier</b>
+                    <span class="text-danger"
+                          *ngIf="galerieForm.get('fileName').errors && galerieForm.get('fileName').hasError('required')">*
+                      </span>
+                  </label>
+                  <c-col [sm]="4">
+                    <input cFormControl
+                           type="text"
+                           class="form-control"
+                           formControlName="fileName"
+                           [class.valid]="galerieForm.get('fileName').valid &&
+                      (galerieForm.get('fileName').dirty || galerieForm.get('fileName').touched)"
+                           [class.invalid]="galerieForm.get('fileName').invalid &&
+                      (galerieForm.get('fileName').dirty || galerieForm.get('fileName').touched)" />
+
+                    <div *ngIf="galerieForm.get('fileName').invalid && galerieForm.get('fileName').errors && (galerieForm.get('fileName').dirty
+                   || galerieForm.get('fileName').touched)">
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('fileName').hasError('required')">
+                        Le nom du fichier est obligatoire.
+                      </small>
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('fileName').hasError('minlength')">
+                        Saisir un minimum de {{galerieForm.get('fileName').errors.minlength.requiredLength}} caractères.
+                      </small>
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('fileName').hasError('maxlength')">
+                        Saisir un maximum de {{galerieForm.get('fileName').errors.maxlength.requiredLength}} caractères.
+                      </small>
+                    </div>
+                  </c-col>
+                </c-row>
+
+                <br>
+
+                <c-row class="mb-3">
+                  <label cLabel="col" cCol [sm]="2">
+                    <b>Url</b>
+                    <span class="text-danger"
+                          *ngIf="galerieForm.get('url').errors && galerieForm.get('url').hasError('required')">*
+                     </span>
+                  </label>
+                  <c-col [sm]="4">
+                    <input cFormControl
+                           type="text"
+                           class="form-control"
+                           formControlName="url"
+                           readonly
+                           [class.valid]="galerieForm.get('url').valid &&
+                      (galerieForm.get('url').dirty || galerieForm.get('url').touched)"
+                           [class.invalid]="galerieForm.get('url').invalid &&
+                      (galerieForm.get('url').dirty || galerieForm.get('url').touched)"/>
+
+                    <div *ngIf="galerieForm.get('url').invalid && galerieForm.get('url').errors && (galerieForm.get('url').dirty
+                   || galerieForm.get('url').touched)">
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('url').hasError('required')">
+                        L'url du fichiér est obligatoire.
+                      </small>
+                      <!-- <small class="text-danger"
+                              *ngIf="donneeForm.get('url').hasError('pattern')">
+                         Saisir une adresse url valide.
+                       </small>-->
+                    </div>
+                  </c-col>
+                </c-row>
+
+                <br>
+
+                <c-row class="mb-3">
+                  <label cLabel="col" cCol [sm]="2">
+                    <b>Format</b>
+                    <span class="text-danger"
+                          *ngIf="galerieForm.get('format').errors && galerieForm.get('format').hasError('required')">*
+                   </span>
+                  </label>
+                  <c-col [sm]="3">
+                    <select cSelect
+                            formControlName="format"
+                            class="formControl"
+                            [class.valid]="galerieForm.get('format').valid &&
+                      (galerieForm.get('format').dirty || galerieForm.get('format').touched)"
+                            [class.invalid]="galerieForm.get('format').invalid &&
+                      (galerieForm.get('format').dirty || galerieForm.get('format').touched)">
+                      <option value="">Choisir le format</option>
+                      <option value="jpeg">JPEG</option>
+                      <option value="gif">GIF</option>
+                      <option value="png">PNG</option>
+                      <option value="jpg">JPG</option>
+                    </select>
+
+                    <div *ngIf="galerieForm.get('format').invalid && galerieForm.get('format').errors && (galerieForm.get('format').dirty
+                   || galerieForm.get('format').touched)">
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('format').hasError('required')">
+                        Le format est obligatoire.
+                      </small>
+                    </div>
+                  </c-col>
+                </c-row>
+
+                <br>
+
+                <c-row class="mb-3">
+                  <label cLabel="col" cCol [sm]="2">
+                    <b>Intitule</b>
+                    <span class="text-danger"
+                          *ngIf="galerieForm.get('intitule').errors && galerieForm.get('intitule').hasError('required')">*
+                    </span>
+                  </label>
+                  <c-col [sm]="4">
+                    <input cFormControl
+                           type="text"
+                           class="form-control"
+                           formControlName="intitule"
+                           [class.valid]="galerieForm.get('intitule').valid &&
+                      (galerieForm.get('intitule').dirty || galerieForm.get('intitule').touched)"
+                           [class.invalid]="donneeForm.get('intitule').invalid &&
+                      (galerieForm.get('intitule').dirty || galerieForm.get('intitule').touched)"/>
+
+                    <div *ngIf="galerieForm.get('intitule').invalid && galerieForm.get('intitule').errors && (galerieForm.get('intitule').dirty
+                   || galerieForm.get('intitule').touched)">
+                      <small class="text-danger"
+                             *ngIf="galerieForm.get('intitule').hasError('required')">
+                        L'intitule est obligatoire.
+                      </small>
+                    </div>
+                  </c-col>
+                </c-row>
+
+              </c-card-body>
+            </c-card>
+          </c-col>
+
+          <br><br>
+          <c-col [sm]="12">
+            <c-card class="mb-6">
+              <c-card-body>
+                <div class="center">
+                  <button cButton
+                          (click)="onReset()"
+                          class="bold btn-radius">Annuler
+                  </button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button cButton (click)="onSubmitGalerie()"
+                          class="bold btn-radius">
+                    Enregistrer
+                  </button>
+                </div>
+              </c-card-body>
+            </c-card>
+          </c-col>
+          </form>
+        </div>
+      </ng-template>
+    </c-accordion-item>
+
+    <c-accordion-item #item2="cAccordionItem" [visible]="false">
+      <ng-template cTemplateId="accordionHeaderTemplate">
+        <button (click)="item2.toggleItem()" [collapsed]="!item2.visible" cAccordionButton>
+          <strong>Ajouter une donnée dans les enseignements (lien Youtube) </strong>
+        </button>
+      </ng-template>
+      <ng-template cTemplateId="accordionBodyTemplate">
+        <div class="accordion-body">
+          <form [formGroup]="enseignementForm">
+            <c-col [sm]="12">
+              <c-card class="mb-4">
+                <c-card-body>
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Date</b>
+                      <span class="text-danger"
+                            *ngIf="enseignementForm.get('dateFichier').errors && enseignementForm.get('dateFichier').hasError('required')">*
+                     </span>
+                    </label>
+                    <c-col [sm]="4">
+                      <input #dateFichier
+                             cFormControl
+                             type="text"
+                             formControlName="dateFichier"
+                             [class.valid]="enseignementForm.get('dateFichier').valid &&
+                     (enseignementForm.get('dateFichier').dirty || enseignementForm.get('dateFichier').touched)"
+                             [class.invalid]="emissionForm.get('dateFichier').invalid &&
+                     (enseignementForm.get('dateFichier').dirty || enseignementForm.get('dateFichier').touched)">
+
+                      <div *ngIf="enseignementForm.get('dateFichier').invalid && enseignementForm.get('dateFichier').errors
+                      && (enseignementForm.get('dateFichier').dirty
+                   || enseignementForm.get('dateFichier').touched)">
+                        <small class="text-danger"
+                               *ngIf="enseignementForm.get('dateFichier').hasError('required')">
+                          La date du fichier est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <br>
+
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Url</b>
+                      <span class="text-danger"
+                            *ngIf="enseignementForm.get('url').errors && enseignementForm.get('url').hasError('required')">*
+                     </span>
+                    </label>
+                    <c-col [sm]="4">
+                      <input cFormControl
+                             type="text"
+                             class="form-control"
+                             formControlName="url"
+                             placeholder="Saisir un liens youtube"
+                             [class.valid]="enseignementForm.get('url').valid &&
+                      (enseignementForm.get('url').dirty || enseignementForm.get('url').touched)"
+                             [class.invalid]="enseignementForm.get('url').invalid &&
+                      (enseignementForm.get('url').dirty || enseignementForm.get('url').touched)"/>
+
+                      <div *ngIf="enseignementForm.get('url').invalid && enseignementForm.get('url').errors && (enseignementForm.get('url').dirty
+                   || enseignementForm.get('url').touched)">
+                        <small class="text-danger"
+                               *ngIf="enseignementForm.get('url').hasError('required')">
+                          L'url du fichiér est obligatoire.
+                        </small>
+                        <!-- <small class="text-danger"
+                                *ngIf="donneeForm.get('url').hasError('pattern')">
+                           Saisir une adresse url valide.
+                         </small>-->
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <br>
+
+                  <c-row>
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Type d'enseignement</b>
+                      <span class="text-danger"
+                            *ngIf="enseignementForm.get('typeEnseignement').errors && enseignementForm.get('typeEnseignement').hasError('required')">*
+                      </span>
+                    </label>
+
+                    <c-col [sm]="4">
+                      <select cSelect
+                              formControlName="typeEnseignement"
+                              class="form-control">
+                        <option value="">Choisir le type d'enseignement</option>
+                        <option *ngFor="let typeEnseignement of listTypeEnseignement"
+                                [value]="typeEnseignement.id">
+                          {{typeEnseignement.intitule}}
+                        </option>
+                      </select>
+
+                      <div *ngIf="enseignementForm.get('typeEnseignement').invalid && enseignementForm.get('typeEnseignement').errors && (enseignementForm.get('typeEnseignement').dirty
+                   || enseignementForm.get('typeEnseignement').touched)">
+                        <small class="text-danger"
+                               *ngIf="enseignementForm.get('typeEnseignement').hasError('required')">
+                          Le type d'enseignement est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <br>
+
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Titre du Message</b>
+                      <span class="text-danger"
+                            *ngIf="enseignementForm.get('titreMessage').errors && enseignementForm.get('titreMessage').hasError('required')">*
+                   </span>
+                    </label>
+
+                    <c-col [sm]="4">
+                      <select cSelect
+                              formControlName="titreMessage">
+                        <option value="">Choisir le titre du message</option>
+                        <option *ngFor="let titreMessage of listTitreMessage; index as i"
+                                [value]="titreMessage.id">
+                          {{titreMessage.intitule}}
+                        </option>
+                      </select>
+                      <div *ngIf="enseignementForm.get('titreMessage').invalid && enseignementForm.get('titreMessage').errors &&
+                  (enseignementForm.get('titreMessage').dirty || enseignementForm.get('titreMessage').touched)">
+                        <small class="text-danger" *ngIf="enseignementForm.get('titreMessage').hasError('required')">
+                          Le titre du message est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <br>
+
+                  <c-row class="mb-3">
+                    <label cLabel="col" cCol [sm]="2">
+                      <b>Description</b>
+                      <span class="text-danger"
+                            *ngIf="enseignementForm.get('description').errors && enseignementForm.get('description').hasError('required')">*
+                      </span>
+                    </label>
+                    <c-col [sm]="8">
+                      <textarea cFormControl type="text"  class="form-control" formControlName="description" ></textarea>
+                      <div *ngIf="enseignementForm.get('description').invalid && enseignementForm.get('description').errors &&
+               (enseignementForm.get('description').dirty || enseignementForm.get('description').touched)">
+                        <small class="text-danger" *ngIf="enseignementForm.get('description').hasError('required')">
+                          La description  est obligatoire.
+                        </small>
+                      </div>
+                    </c-col>
+                  </c-row>
+
+                  <br>
+
+
+                </c-card-body>
+              </c-card>
+            </c-col>
+
+          </form>
+
+          <br><br>
+          <c-col [sm]="12">
+            <c-card class="mb-6">
+              <c-card-body>
+                <div class="center">
+                  <button cButton
+                          (click)="onReset()"
+                          class="bold btn-radius">Annuler
+                  </button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button cButton (click)="onSubmitEnseignement()"
+                          class="bold btn-radius">
+                    Enregistrer
+                  </button>
+                </div>
+              </c-card-body>
+            </c-card>
+          </c-col>
 
         </div>
       </ng-template>
     </c-accordion-item>
   </c-accordion>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <form [formGroup]="donneeForm " (ngSubmit)="onSubmit()">
-  <c-col [sm]="12">
-    <c-card class="mb-4">
-      <c-card-header>
-        <strong>Ajouter une donnée</strong>
-      </c-card-header>
-      <c-card-body>
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Type Donnée</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('typeDonnee').errors && donneeForm.get('typeDonnee').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="3">
-            <select cSelect
-                    formControlName="typeDonnee"
-                    (change)="changeTypeDonne($event)"
-                    class="form-control"
-                    [class.valid]="donneeForm.get('typeDonnee').valid &&
-                      (donneeForm.get('typeDonnee').dirty || donneeForm.get('typeDonnee').touched)"
-                    [class.invalid]="donneeForm.get('typeDonnee').invalid &&
-                      (donneeForm.get('typeDonnee').dirty || donneeForm.get('typeDonnee').touched)">
-              <option value ="">Choisir le type de donnée</option>
-              <option value="1">ENSEIGNEMENT</option>
-              <option value="2">EMISSION</option>
-              <option value="3">GALERIE</option>
-            </select>
-
-            <div *ngIf="donneeForm.get('typeDonnee').invalid && donneeForm.get('typeDonnee').errors && (donneeForm.get('typeDonnee').dirty
-                   || donneeForm.get('typeDonnee').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('typeDonnee').hasError('required')">
-                Le type de donnée est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Format</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('format').errors && donneeForm.get('format').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="3">
-            <select cSelect
-                    formControlName="format"
-                    class="form-control"
-                    [class.valid]="donneeForm.get('format').valid &&
-                      (donneeForm.get('format').dirty || donneeForm.get('format').touched)"
-                    [class.invalid]="donneeForm.get('format').invalid &&
-                      (donneeForm.get('format').dirty || donneeForm.get('format').touched)">
-              <option value="">Choisir le format de fichier</option>
-              <option value="jpg">JPG</option>
-              <option value="mp4">MP4</option>
-              <option value="mp3">MP3</option>
-            </select>
-
-            <div *ngIf="donneeForm.get('format').invalid && donneeForm.get('format').errors && (donneeForm.get('format').dirty
-                   || donneeForm.get('format').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('format').hasError('required')">
-                Le format est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Date</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('dateFichier').errors && donneeForm.get('dateFichier').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="4">
-            <input #dateFichier
-                   cFormControl
-                   type="text"
-                   class="form-control"
-                   formControlName="dateFichier"
-                   placeholder="dd/MM/yyyy"
-                   [class.valid]="donneeForm.get('dateFichier').valid &&
-                      (donneeForm.get('dateFichier').dirty || donneeForm.get('dateFichier').touched)"
-                   [class.invalid]="donneeForm.get('dateFichier').invalid &&
-                      (donneeForm.get('dateFichier').dirty || donneeForm.get('dateFichier').touched)" />
-
-            <div *ngIf="donneeForm.get('dateFichier').invalid && donneeForm.get('dateFichier').errors && (donneeForm.get('dateFichier').dirty
-                   || donneeForm.get('dateFichier').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('dateFichier').hasError('required')">
-                La date du fichier est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Nom du Fichier</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('fileName').errors && donneeForm.get('fileName').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="4">
-            <input cFormControl
-                   type="text"
-                   class="form-control"
-                   formControlName="fileName"
-                   [class.valid]="donneeForm.get('fileName').valid &&
-                      (donneeForm.get('fileName').dirty || donneeForm.get('fileName').touched)"
-                   [class.invalid]="donneeForm.get('fileName').invalid &&
-                      (donneeForm.get('fileName').dirty || donneeForm.get('fileName').touched)" />
-
-            <div *ngIf="donneeForm.get('fileName').invalid && donneeForm.get('fileName').errors && (donneeForm.get('fileName').dirty
-                   || donneeForm.get('fileName').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('fileName').hasError('required')">
-                Le nom du fichier est obligatoire.
-              </small>
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('fileName').hasError('minlength')">
-                Saisir un minimum de {{donneeForm.get('fileName').errors.minlength.requiredLength}} caractères.
-              </small>
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('fileName').hasError('maxlength')">
-                Saisir un maximum de {{donneeForm.get('fileName').errors.maxlength.requiredLength}} caractères.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <c-row class="mb-3">
-           <label cLabel="col" cCol [sm]="2">
-            <b>Url</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('url').errors && donneeForm.get('url').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="4">
-            <input cFormControl
-                   type="text"
-                   class="form-control"
-                   formControlName="url"
-                   [class.valid]="donneeForm.get('url').valid &&
-                      (donneeForm.get('url').dirty || donneeForm.get('url').touched)"
-                   [class.invalid]="donneeForm.get('url').invalid &&
-                      (donneeForm.get('url').dirty || donneeForm.get('url').touched)"/>
-
-            <div *ngIf="donneeForm.get('url').invalid && donneeForm.get('url').errors && (donneeForm.get('url').dirty
-                   || donneeForm.get('url').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('url').hasError('required')">
-                L'url du fichiér est obligatoire.
-              </small>
-             <!-- <small class="text-danger"
-                     *ngIf="donneeForm.get('url').hasError('pattern')">
-                Saisir une adresse url valide.
-              </small>-->
-            </div>
-          </c-col>
-       </c-row>
-
-      </c-card-body>
-    </c-card>
-  </c-col>
-
-  <c-col [sm]="12" *ngIf="isEmission">
-    <c-card class="mb-4">
-      <c-card-header>
-        <strong>Ajouter une emission</strong>
-      </c-card-header>
-      <c-card-body>
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Description</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('descriptionEmission').errors && donneeForm.get('descriptionEmission').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="8">
-            <textarea cFormControl type="text"  class="form-control" formControlName="descriptionEmission" ></textarea>
-            <div *ngIf="donneeForm.get('descriptionEmission').invalid && donneeForm.get('descriptionEmission').errors &&
-                  (donneeForm.get('descriptionEmission').dirty || donneeForm.get('descriptionEmission').touched)">
-              <small class="text-danger" *ngIf="donneeForm.get('descriptionEmission').hasError('required')">
-                La description de l'émission est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-      </c-card-body>
-    </c-card>
-  </c-col>
-
-  <br>
-
-  <c-col [sm]="12" *ngIf="isEnseignement">
-    <c-card class="mb-4">
-      <c-card-header>
-        <strong>Ajouter un enseignement</strong>
-      </c-card-header>
-      <c-card-body>
-        <c-row>
-          <label cLabel="col" cCol [sm]="2">
-            <b>Type d'émission</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('typeEmission').errors && donneeForm.get('typeEmission').hasError('required')">*
-            </span>
-          </label>
-
-          <c-col [sm]="4">
-            <select cSelect
-                    formControlName="typeEmission"
-                    class="form-control"
-                    [class.valid]="donneeForm.get('typeEmission').valid &&
-                      (donneeForm.get('typeEmission').dirty || donneeForm.get('typeEmission').touched)"
-                    [class.invalid]="donneeForm.get('typeEmission').invalid &&
-                      (donneeForm.get('typeEmission').dirty || donneeForm.get('typeEmission').touched)"
-                    (change)="changeTypeEmission($event)">
-              <option value="">Choisir le type d'émission</option>
-              <option *ngFor="let typeEmission of listTypeEmission"
-                      [value]="typeEmission.id">
-                {{typeEmission.intitule}}
-              </option>
-            </select>
-
-            <div *ngIf="donneeForm.get('typeEmission').invalid && donneeForm.get('typeEmission').errors && (donneeForm.get('typeEmission').dirty
-                   || donneeForm.get('typeEmission').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('typeEmission').hasError('required')">
-                Le type d'émission est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <br>
-
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Titre du Message</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('titreMessage').errors && donneeForm.get('titreMessage').hasError('required')">*
-            </span>
-          </label>
-
-          <c-col [sm]="4">
-            <select cSelect
-                    formControlName="titreMessage">
-                   <!-- (change)="changeCivilite($event)"-->
-              <option value="">Choisir le titre du message</option>
-              <option *ngFor="let titreMessage of listTitreMessage; index as i"
-                      [value]="titreMessage.id">
-                {{titreMessage.intitule}}
-              </option>
-            </select>
-            <div *ngIf="donneeForm.get('titreMessage').invalid && donneeForm.get('titreMessage').errors &&
-                  (donneeForm.get('titreMessage').dirty || donneeForm.get('titreMessage').touched)">
-                <small class="text-danger" *ngIf="donneeForm.get('titreMessage').hasError('required')">
-                    Le titre du message est obligatoire.
-                </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Type d'enseignement</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('typeEnseignement').errors && donneeForm.get('typeEnseignement').hasError('required')">*
-            </span>
-          </label>
-
-          <c-col [sm]="6">
-            <select cSelect
-                    formControlName="typeEnseignement">
-              <option value="">Choisir le type d'enseignement</option>
-              <option *ngFor="let typeEnseignement of listTypeEnseignement"
-                      [value]="typeEnseignement.id">
-                {{ typeEnseignement.intitule }}
-              </option>
-            </select>
-            <div *ngIf="donneeForm.get('typeEnseignement').invalid && donneeForm.get('typeEnseignement').errors &&
-                  (donneeForm.get('typeEnseignement').dirty || donneeForm.get('typeEnseignement').touched)">
-              <small class="text-danger" *ngIf="donneeForm.get('typeEnseignement').hasError('required')">
-                  Le type d'nseignement est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Description</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('description').errors && donneeForm.get('description').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="8">
-            <textarea cFormControl type="text"  class="form-control" formControlName="description" ></textarea>
-            <div *ngIf="donneeForm.get('description').invalid && donneeForm.get('description').errors &&
-                  (donneeForm.get('description').dirty || donneeForm.get('description').touched)">
-              <small class="text-danger" *ngIf="donneeForm.get('description').hasError('required')">
-                La description  est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-      </c-card-body>
-    </c-card>
-  </c-col>
-
-  <c-col [sm]="12" *ngIf="isGalerie">
-    <c-card class="mb-4">
-      <c-card-header>
-        <strong>Ajouter une photo en Galérie</strong>
-      </c-card-header>
-      <c-card-body>
-        <!--<c-row class="mb-3">
-           <label cLabel="col" cCol [sm]="2">
-             <b>Fichier</b>
-             <span class="text-danger"
-                   *ngIf="donneeForm.get('fileSource').errors && donneeForm.get('fileSource').hasError('required')">*
-             </span>
-           </label>
-
-           <c-col [sm]="4">
-             <input cFormControl
-                    type="file"
-                    class="form-control"
-                    formControlName="fileSource"
-                    [class.valid]="donneeForm.get('file').valid &&
-                     (donneeForm.get('file').dirty || donneeForm.get('file').touched)"
-                    [class.invalid]="donneeForm.get('file').invalid &&
-                     (donneeForm.get('file').dirty || donneeForm.get('file').touched)"
-                    (change)="onFileChange($event)"
-              />
-             <img [src]="imageSrc" *ngIf="imageSrc" style="height: 200px; width:300px; border-radius: 20px">
-
-             <div *ngIf="donneeForm.get('file').invalid && donneeForm.get('file').errors && (donneeForm.get('file').dirty
-                    || donneeForm.get('file').touched)">
-               <small class="text-danger"
-                      *ngIf="donneeForm.get('file').hasError('required')">
-                 Le fichier est obligatoire.
-               </small>
-             </div>
-           </c-col>
-         </c-row>-->
-        <c-row class="mb-3">
-          <label cLabel="col" cCol [sm]="2">
-            <b>Intitule</b>
-            <span class="text-danger"
-                  *ngIf="donneeForm.get('intitule').errors && donneeForm.get('intitule').hasError('required')">*
-            </span>
-          </label>
-          <c-col [sm]="4">
-            <input cFormControl
-                   type="text"
-                   class="form-control"
-                   formControlName="intitule"
-                   [class.valid]="donneeForm.get('intitule').valid &&
-                      (donneeForm.get('intitule').dirty || donneeForm.get('intitule').touched)"
-                   [class.invalid]="donneeForm.get('intitule').invalid &&
-                      (donneeForm.get('intitule').dirty || donneeForm.get('intitule').touched)"/>
-
-            <div *ngIf="donneeForm.get('intitule').invalid && donneeForm.get('intitule').errors && (donneeForm.get('intitule').dirty
-                   || donneeForm.get('intitule').touched)">
-              <small class="text-danger"
-                     *ngIf="donneeForm.get('intitule').hasError('required')">
-                L'intitule est obligatoire.
-              </small>
-            </div>
-          </c-col>
-        </c-row>
-
-      </c-card-body>
-    </c-card>
-  </c-col>
- </form>
-
-  <br>
-  <c-col [sm]="12">
-    <c-card class="mb-6">
-      <c-card-body>
-        <div class="center">
-          <button cButton
-                  (click)="onReset()"
-                  class="bold btn-radius">Annuler
-          </button>
-          &nbsp;&nbsp;&nbsp;
-          <button cButton (click)="onSubmit()"
-                  class="bold btn-radius">
-            Enregistrer
-          </button>
-        </div>
-      </c-card-body>
-    </c-card>
-  </c-col>
-
-
-
-
 </c-row>
 
 

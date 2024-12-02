@@ -78,6 +78,8 @@ import {AssistanceComponent} from './views/assistance/assistance.component';
 import {AssistanceModule} from "./views/assistance/assistance.module";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {ConfidentialiteComponent} from './views/confidentialite/confidentialite.component';
+import {ConfidentialiteModule} from "./views/confidentialite/confidentialite.module";
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true,
@@ -107,7 +109,8 @@ const APP_CONTAINERS = [
     DonComponent,
     SafePipe,
     ChargementComponent,
-    AssistanceComponent
+    AssistanceComponent,
+    ConfidentialiteComponent
   ],
   imports: [
     BrowserModule,
@@ -152,6 +155,7 @@ const APP_CONTAINERS = [
     ContactModule,
     MediasModule,
     AssistanceModule,
+    ConfidentialiteModule,
     // Material Modules
     MatTableModule,
     MatPaginatorModule,
